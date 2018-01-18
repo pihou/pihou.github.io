@@ -79,14 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番. 上手工程中主要遇到的问题包含  需要链接 python解释器, 文中的实例代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="autotools个人备忘">
+<meta property="og:url" content="http://yoursite.com/2017/02/23/autotools个人备忘/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番. 上手工程中主要遇到的问题包含  需要链接 python解释器, 文中的实例代码">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T08:00:36.000Z">
+<meta property="og:updated_time" content="2018-01-18T12:34:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="autotools个人备忘">
+<meta name="twitter:description" content="autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番. 上手工程中主要遇到的问题包含  需要链接 python解释器, 文中的实例代码">
 
 
 
@@ -116,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/23/autotools个人备忘/"/>
 
 
 
 
 
-  <title>about | Hexo</title>
+  <title>autotools个人备忘 | Hexo</title>
   
 
 
@@ -217,33 +220,197 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/23/autotools个人备忘/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">autotools个人备忘</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-23T00:00:00+08:00">
+                2017-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番.</p>
+<p>上手工程中主要遇到的问题包含</p>
+<ol>
+<li><p>需要链接 python解释器, 文中的实例代码并未涉及链接第三方库,需要自己琢磨,但是automake实际也相当繁杂,一时不太容易领悟要领.好在折腾正确了. 源码文件夹的 Makefile.am文件 LDFLAGS 使用制定在源码链接阶段的链接选项, 但是通过这种形式指定的选项,在链接时会放在使用到库的文件前面,导致链接找不到符号定义. **_LDADD,可以解决这个问题,但是一般的例子都是指定的变量,尝试着制定了python动态库的文件名,结果说无法生成此文件.最后通过指定连接文件的绝对路径解决此问题.</p>
+</li>
+<li><p>整套工具链较为繁杂,配置繁琐.</p>
+</li>
+</ol>
+<a id="more"></a>
+<hr>
+<p>本文主要用于个人备忘使用,并未对实际细节做深入描述</p>
+<p>主要生成文件介绍:</p>
+<ol>
+<li>configure.ac (autoscan生成)</li>
+<li>aclocal.m4 (aclocal生成)</li>
+<li>config.h.in (autoheader生成)</li>
+<li>Makefile.am (按规则手工编辑)</li>
+<li>Makefile.in (automake生成) </li>
+</ol>
+<p>主要步骤如下:</p>
+<ol>
+<li>autocan 生成 configure.scan  mv configure.scan configure.ac</li>
+<li>configure.ac 修改 AC_INIT(FULL-PACKAGE-NAME, VERSION, BUG-REPORT-ADDRESS)</li>
+<li>autconf 生成 autom4te.cache configure</li>
+<li><p>根目录添加文件 Makefile.am ,文件内容<br>AUTOMAKE_OPTIONS = foreign<br>SUBDIRS = src doc examples man scripts</p>
+</li>
+<li><p>编辑src/Makefile.am<br>CFLAGS = –pedantic -Wall -std=c99 -O2<br>LDFLAGS =<br>bin_PROGRAMS = targetbinary1 targetbinary2 […] targetbinaryN<br>targetbinary1_SOURCES = targetbinary1.c myheader.h […]</p>
+</li>
+<li><p>vim configure.ac  在AM_INIT()后面加入<br>AM_INIT_AUTOMAKE(pippo, 2.6)<br>AC_OUTPUT(Makefile src/Makefile doc/Makefile examples/Makefile man/Makefile scripts/Makefile)</p>
+</li>
+<li><p>执行 aclocal ,   automake –add-missing ,  autoreconf –install<br>, autoconf 项目配置完成</p>
+</li>
+</ol>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    瘦皮猴
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2017/02/23/autotools个人备忘/" title="autotools个人备忘">http://yoursite.com/2017/02/23/autotools个人备忘/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/" rel="external nofollow" target="_blank">CC BY 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/04/杂谈-讲故事与灵感/" rel="next" title="杂谈-讲故事与灵感">
+                <i class="fa fa-chevron-left"></i> 杂谈-讲故事与灵感
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/12/不懂装懂 MapReduce/" rel="prev" title="不懂装懂 MapReduce">
+                不懂装懂 MapReduce <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 

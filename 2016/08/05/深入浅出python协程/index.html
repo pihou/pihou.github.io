@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Talk is easy, show me your code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出python协程">
+<meta property="og:url" content="http://yoursite.com/2016/08/05/深入浅出python协程/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Talk is easy, show me your code">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-18T11:36:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出python协程">
+<meta name="twitter:description" content="Talk is easy, show me your code">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/05/深入浅出python协程/"/>
+
+
+
+
+
+  <title>深入浅出python协程 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/05/深入浅出python协程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入浅出python协程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-05T00:00:00+08:00">
+                2016-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Talk is easy, show me your code </p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class call_link(object):</span><br><span class="line">	def __init__(self, gen):</span><br><span class="line">		self.gen = gen</span><br><span class="line">	</span><br><span class="line">	def __call__(self, arg):</span><br><span class="line">		try:</span><br><span class="line">			data = arg*&quot;A&quot;</span><br><span class="line">			self.gen.send(data)</span><br><span class="line">		except StopIteration:</span><br><span class="line">			return</span><br><span class="line"></span><br><span class="line">def generator_mrg(fn):</span><br><span class="line">	def wrap(*args,**kwargs):</span><br><span class="line">		gen = fn(*args,**kwargs)</span><br><span class="line">		link_obj = call_link(gen)</span><br><span class="line">		rel_fn, arg = gen.next()</span><br><span class="line">		rel_fn(arg, link_obj)</span><br><span class="line">	return wrap</span><br><span class="line"></span><br><span class="line">def recv_data(arg, link_obj):</span><br><span class="line">	time = arg</span><br><span class="line">	threading.Timer(time, link_obj, [arg,]).start()</span><br><span class="line">################################################</span><br><span class="line">@generator_mrg</span><br><span class="line">def get_data_outer1(socket):</span><br><span class="line">	data = yield recv_data, socket</span><br><span class="line">	#using data do something,like saving it or printing it</span><br><span class="line">	print &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; FanPrint[0].get_data_outer1&quot;,socket, data</span><br><span class="line"></span><br><span class="line">@generator_mrg</span><br><span class="line">def get_data_outer2(socket):</span><br><span class="line">	data = yield recv_data, socket</span><br><span class="line">	#using data do something,like saving it or printing it</span><br><span class="line">	print &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; FanPrint[0].get_data_outer2&quot;,socket, data</span><br><span class="line"></span><br><span class="line">get_data_outer1(5)</span><br><span class="line">get_data_outer2(3)</span><br></pre></td></tr></table></figure>
+<p>首先请将注意力放置到函数get_data_outer1以下，忽略掉装饰器generator_mrg的存在。直接执行上述代码。你会发现什么？什么鬼，get_data_outer1内加的打印居然会在get_data_outer2内加的打印之后打印出来，先执行可是get_data_outer1的啊。代码执行序列怎么的发生的切换，究竟发生了什么？</p>
+<p>OK，上述是理解python协程最好的案例。程序并未使用线程或进程等技术（请忽略threading.Timer方法，此处为方便演示而使用，在理解时请将其替换为网络编程的信号驱动模型即，如果socket可读则回调link_obj对象），但执行流确发生了切换，而且是在开销极低的情况下发生的，与普通函数调用并无太大差异，而无需要内核调度切换。这就是“协程”的概念核心所在。</p>
+<p>下面对代码作出解释，希望读者已经对python具备一定的了解和认识，相关概念技术仅作简要说明，并不会作出详细解释，如果需要进一步了解，请自行google。</p>
+<ol>
+<li>python生成器。函数内包含yield关键字时 首次执行函数将返回一个生成器。执行生成器的next方法时函数内的代码将得到执行。直到执行到含yield的语句，此时将返回yield后所返回的变量（此场景可将其简单理解为return）。如果含yield语句存在 “data = yield recv_data, socket”此类写法。则在再次执行生成器时可使用生成器的send方法，send函数可传送参数，生成器内接收参数的符号为yield关键字前变量名。</li>
+<li>python装饰器。get_data_outer1前的@generator_mrg的作用是装饰get_data_outer1。怎么装饰的了？将函数对象get_data_outer1作为参数传递给函数generator_mrg。generator_mrg函数内部返回一个新的函数对象回来，然后python解释器将返回这新的函数对象使用原函数的符号名保存到模块对象。generator_mrg函数内部使用函数闭包将原函数get_data_outer1的逻辑保存到了新返回的函数对象内部，在原函数的基础上多做了点其它的事情。</li>
+</ol>
+<p>介绍完生成器和装饰器，最后我们把整个逻辑再过一下。</p>
+<p>我们在执行get_data_outer[1,2]方法时，已经不是原来的函数了。装饰器背着我们做了一些其它的事情。使用get_data_outer[1,2]内yeild返回的方法和参数，执行之，并使用一个同样的回调类，将原本打断了的执行序列在逻辑上衔接了回来。再次回到get_data_outer[1,2]内的执行。当然执行序列回来后，get_data_outer[1,2] 谁执行在前，谁执行再后，就看内核先返回哪个回调了。</p>
+<p>代码这么些有什么好处了？</p>
+<ol>
+<li><p>现在先设想这样一个场景，我们需要通过socket取数据，然后将这些数据存放到数据库。然后这两个步骤都是会可能发生阻塞的。为了不阻塞，如果我们使用信号驱动模型，我们被迫将上面的这些步骤拆分成3个阶段，也就是3个函数。读数据 ，等回调，写数据库，等回调，结果返回。但是如果使用协程了？我们可以将这3个阶段缝合成一个函数。而且参数传递之类的操作也得到了极大的简化，因为我们有同一个函数的前后文背景。</p>
+</li>
+<li><p>代码复用更高，代码更简洁，便于维护。装饰器所做的工作相当于把一系列的回调工作都承接了，我们不再需要取很多的回调函数名，而且这些函数的功用还是冗余的。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    瘦皮猴
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2016/08/05/深入浅出python协程/" title="深入浅出python协程">http://yoursite.com/2016/08/05/深入浅出python协程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/" rel="external nofollow" target="_blank">CC BY 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/04/nginx http框架初探/" rel="next" title="nginx http框架初探">
+                <i class="fa fa-chevron-left"></i> nginx http框架初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/06/python装饰器与闭包/" rel="prev" title="python装饰器与闭包">
+                python装饰器与闭包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="瘦皮猴" />
+            
+              <p class="site-author-name" itemprop="name">瘦皮猴</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">瘦皮猴</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

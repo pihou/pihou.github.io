@@ -79,14 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不懂装懂 MapReduce">
+<meta property="og:url" content="http://yoursite.com/2017/05/12/不懂装懂 MapReduce/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T08:00:36.000Z">
+<meta property="og:updated_time" content="2018-01-18T12:36:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="不懂装懂 MapReduce">
+<meta name="twitter:description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
 
 
 
@@ -116,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/12/不懂装懂 MapReduce/"/>
 
 
 
 
 
-  <title>about | Hexo</title>
+  <title>不懂装懂 MapReduce | Hexo</title>
   
 
 
@@ -217,33 +220,168 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/不懂装懂 MapReduce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">不懂装懂 MapReduce</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T00:00:00+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.</p>
+<a id="more"></a>
+<p>后续为此专门查阅了MapReduce,相关概念. 简单来说,MapReduce,是在做数据统计运算是的两个步骤, 一个是Map, 一个是Reduce, 和Python的内建函数相类似的, Map是在做数据统计前的加工处理, Reduce则是在计算最终需要的统计数据. 这些统计数据之前并无依赖性,可以放在分布式集群中,多机器并行计算. MapReduce,只是这种算法的思想核心而已. 快也仅仅只是因为算法的本身而已, 和实际程序执行效率并无关系. 重点是在与分布式,并发执行. </p>
+<p>但是,同事的说法就很让人无语了,我们可不可以不要这么肤浅. 玩概念还玩的这么逗比的. 我个人是极为讨厌半懂不懂还装模作样的.为此自己还专门翻看了python Map Reduce的实现, 也不是什么黑魔法,和使用脚本去写实现也没啥大区别,只是在c层简单封装了一层仅此而已. 更何况仅仅Map Reduce并不能为完全代表MapReduce的全部思想与实现,单单是两个核心实现函数而已.</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    瘦皮猴
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2017/05/12/不懂装懂 MapReduce/" title="不懂装懂 MapReduce">http://yoursite.com/2017/05/12/不懂装懂 MapReduce/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/" rel="external nofollow" target="_blank">CC BY 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/autotools个人备忘/" rel="next" title="autotools个人备忘">
+                <i class="fa fa-chevron-left"></i> autotools个人备忘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/30/xss攻击案例分析/" rel="prev" title="xss攻击案例分析">
+                xss攻击案例分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 

@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。 消息队列。上家公司使用的rabbitmq，但是rabbitmq太重，且erlang太过小众。如果使用redis作为消息队列的话，又太过轻量，无法保证持久化，耗内存。最终选用了java系的kafka，社">
+<meta name="description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="startup技术框架">
 <meta property="og:url" content="http://yoursite.com/2018/01/19/startup技术框架/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。 消息队列。上家公司使用的rabbitmq，但是rabbitmq太重，且erlang太过小众。如果使用redis作为消息队列的话，又太过轻量，无法保证持久化，耗内存。最终选用了java系的kafka，社">
+<meta property="og:description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-19T09:18:51.000Z">
+<meta property="og:updated_time" content="2018-01-19T09:22:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="startup技术框架">
-<meta name="twitter:description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。 消息队列。上家公司使用的rabbitmq，但是rabbitmq太重，且erlang太过小众。如果使用redis作为消息队列的话，又太过轻量，无法保证持久化，耗内存。最终选用了java系的kafka，社">
+<meta name="twitter:description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。">
 
 
 
@@ -306,7 +306,7 @@
       
         <h2 id="基础服务层"><a href="#基础服务层" class="headerlink" title="基础服务层"></a>基础服务层</h2><ol>
 <li>后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。</li>
-<li>缓存使用的redis，目前主要用于验证码，登录授权token等场景。</li>
+<li>缓存使用的redis，目前主要用于验证码，登录授权token等场景。<a id="more"></a></li>
 <li>消息队列。上家公司使用的rabbitmq，但是rabbitmq太重，且erlang太过小众。如果使用redis作为消息队列的话，又太过轻量，无法保证持久化，耗内存。最终选用了java系的kafka，社区活跃，且易于横向扩展，还未正式推出1.0正式版就已经被大量技术人员使用。消息队列主要作为中间件，解藕业务系统，加速http访问速度，将不紧要的处理，拿到其他服务组件来处理。</li>
 <li>分布式文件存储系统minio，主要用于媒体数据的存储。使用go编写，支持分布式扩展，与amazon s3存储服务接口兼容。运行高效，对外服务器下载速度接近本地下载带宽极限。</li>
 </ol>

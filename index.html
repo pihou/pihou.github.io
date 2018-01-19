@@ -229,6 +229,149 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/startup技术框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/19/startup技术框架/" itemprop="url">startup技术框架</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T17:18:00+08:00">
+                2018-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基础服务层"><a href="#基础服务层" class="headerlink" title="基础服务层"></a>基础服务层</h2><ol>
+<li>后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。</li>
+<li>缓存使用的redis，目前主要用于验证码，登录授权token等场景。</li>
+<li>消息队列。上家公司使用的rabbitmq，但是rabbitmq太重，且erlang太过小众。如果使用redis作为消息队列的话，又太过轻量，无法保证持久化，耗内存。最终选用了java系的kafka，社区活跃，且易于横向扩展，还未正式推出1.0正式版就已经被大量技术人员使用。消息队列主要作为中间件，解藕业务系统，加速http访问速度，将不紧要的处理，拿到其他服务组件来处理。</li>
+<li>分布式文件存储系统minio，主要用于媒体数据的存储。使用go编写，支持分布式扩展，与amazon s3存储服务接口兼容。运行高效，对外服务器下载速度接近本地下载带宽极限。</li>
+</ol>
+<h2 id="业务层"><a href="#业务层" class="headerlink" title="业务层"></a>业务层</h2><ol>
+<li>http api接口使用django web框架编写，尽量回避了面向对象，对oo实在是没很多好感（可参见 <a href="http://www.shoupihou.site/2016/10/15/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%A7%82%E6%84%9F/" target="_blank" rel="noopener">面向对象观感</a> 一文）。如果从更广义的角度来看，在一个python模块中，放入一组定位和作用类似的函数族，本质和面向对象也并无太大差别。</li>
+<li>consumer业务组件，完成接收消息队列接收到的消息，并实际处理。</li>
+<li>cleaner业务组件，定时检查媒体数据是否过期，过时，并做出相应处理。</li>
+</ol>
+<h2 id="技术方案迭代"><a href="#技术方案迭代" class="headerlink" title="技术方案迭代"></a>技术方案迭代</h2><h3 id="媒体数据的接收，存储与下载"><a href="#媒体数据的接收，存储与下载" class="headerlink" title="媒体数据的接收，存储与下载"></a>媒体数据的接收，存储与下载</h3><ol>
+<li>在处理媒体数据时，常见方案，接收和下载都在脚本层完成，存储在本地文件系统或第三方云存储中。</li>
+<li>考虑到django为同步阻塞的多进程多线程web框架，脚本层完成大文件的传输工作将极大的降低系统吞吐量。 通过一定的调研工作，确定了nginx代为传输的技术方案。引入nginx扩展模块nginx_upload_module，编译nginx。由nginx 这个多路复用的http异步框架，完成对大文件的接收，存储下载操作。文件上传完成后，nginx通知脚本层文件在文件系统中的存储位置，并完成存储操作。在文件的下载时，由脚本层完成下载鉴权。</li>
+<li>文件的本地存储影响了api的横向扩展，如果需要添加服务器并新建api实例，在提供文件服务时，必须定位文件的存储位置。由此带来的业务复杂度，大大提高了系统的复杂度已经可维护性。为了解决上述缺点，系统加入了分布式存储服务minio，将文件存储到一个分布式的存储系统中。文件的上传操作，同样由nginx完成，脚本层完成从本地文件系统到分布式存储服务minio的转存操作。针对100M左右大小的文件，初步测定转存需要时间为3－5s，还算能接受。文件的下载服务由脚本层完成minio和nginx之间的中转传说。</li>
+<li>脚本层的文件中转服务，实际测试效果很差，远远无法满足业务需求，传输速度仅为50kB/s左右。由此在此进行方案优化，由nginx做动态反向代理和minio直接通信，完成下载操作，速度可榨干本地带宽。脚本层在下载时作为nginx与minio通信中间人。</li>
+</ol>
+<h3 id="容器编排与调度方案（未完成实际部署）"><a href="#容器编排与调度方案（未完成实际部署）" class="headerlink" title="容器编排与调度方案（未完成实际部署）"></a>容器编排与调度方案（未完成实际部署）</h3><p>现有服务均为docker化部署，所有服务均可极为便利的部署和迁移。无需担心linux的各服务组件版本与依赖关系。docker的本地部署方案的缺点是无法跨服务器做横向部署，因此调研docker容器的编排与部署方案。</p>
+<ol>
+<li>最先引起自己注意的是原豆瓣的技术大咖开源的eru以及lain。但是这两套方案都太过小众，友好性不够，遇到问题无法快速借助社区解决，最后放弃。</li>
+<li>rancher的安装很友好，但使用起来并不稳定，相对小众，太年轻了些。</li>
+<li>docker原生的swarm，安装友好度也挺不错，但是在使用后，错误反馈并不是很到位，命令行用的有点莫名其妙。集群子节点删除容器服务后，master节点并未同步信息，且无错误提示，果断弃坑。</li>
+<li>谷歌的kubernetes 部署友好度不够，较为复杂，但是稳定性没得说，后续将逐步跟进kubernets。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/文字注解红黑树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -308,7 +451,7 @@
 <li><p>case2 如果节点P为黑色，则添加完成，因为节点N为红色，整个树的高度保持不变；</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/22/文字注解红黑树/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/22/文字注解红黑树/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -435,7 +578,7 @@
 <p>这些系统属性可通过以下java源码打印出:<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/06/java类搜索浅析/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/06/java类搜索浅析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -564,7 +707,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/05/java volatile浅析/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/05/java volatile浅析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -689,7 +832,7 @@
 <p>为了解决心中的疑问，最近详细阅读了tcp／ip详解的dns部分，并在网上搜寻资料，希望能够得到解答。事实证明，运维太挫了，鄙视下。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/07/30/dns浅析/#espandi" rel="contents">
+            <a class="btn" href="/2017/07/30/dns浅析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -813,7 +956,7 @@
           <p>实际工作中对python多线程技术的使用少之又少。一直以来并未对python的多线程做过多深入。uwsgi在启动http服务时可以启动多进程和多线程。但是日常开发实际多数时候并不用关心多线程，一方面是uwsgi模块已经封装的很完善，另一方面则是因为http的无状态设计，在开放过程中涉及到使用全局变量的情形基本没有。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/07/16/python多线程浅析/#espandi" rel="contents">
+            <a class="btn" href="/2017/07/16/python多线程浅析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -944,7 +1087,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/11/tcp协议概览/#espandi" rel="contents">
+            <a class="btn" href="/2017/06/11/tcp协议概览/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1069,7 +1212,7 @@
 <p><a href="http://coolshell.cn/articles/4914.html" target="_blank" rel="noopener">新浪微博的xss攻击</a>一文对攻击发生的核心并未做阐明，可能耗子叔认为起因显而易见，无需赘述。但是对于自己而言，背后的原理并不是很清晰。所以在反复阅读原文及攻击源码的同时，在网上也搜集了其它资料与网友的观点。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/30/xss攻击案例分析/#espandi" rel="contents">
+            <a class="btn" href="/2017/05/30/xss攻击案例分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1193,7 +1336,7 @@
           <p>工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/12/不懂装懂 MapReduce/#espandi" rel="contents">
+            <a class="btn" href="/2017/05/12/不懂装懂 MapReduce/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1324,131 +1467,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/02/23/autotools个人备忘/#espandi" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/04/杂谈-讲故事与灵感/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="瘦皮猴">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/04/杂谈-讲故事与灵感/" itemprop="url">杂谈-讲故事与灵感</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-04T00:00:00+08:00">
-                2017-02-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="做事与讲故事"><a href="#做事与讲故事" class="headerlink" title="做事与讲故事"></a>做事与讲故事</h3><p>前段时间看到一篇关于腾讯某部门技术架构升级的文章,标题记得差不多是 从百万访问量到亿级访问量. 从文章的内容来看,并没见到多少高深技术的使用,也没见到多少唬人的术语,更多的是纯粹从业务方面来讲解遇到哪些难题, 做了哪些改进.当然,标题本身就很吓人,当别人看到标题本身的时候,至少我看到时,就立马想入非非了,认定肯定是些技术牛人,完成了牛逼的壮举. 但是文章通篇并没有多少花哨的东西,全是以义务为中心介绍的.不由得让自己多少有些意外.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/04/杂谈-讲故事与灵感/#espandi" rel="contents">
+            <a class="btn" href="/2017/02/23/autotools个人备忘/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1540,7 +1559,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

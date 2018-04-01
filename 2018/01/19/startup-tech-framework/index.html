@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-01T09:06:26.000Z">
+<meta property="og:updated_time" content="2018-04-01T09:10:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="startup技术框架">
 <meta name="twitter:description" content="基础服务层 后台关系数据库使用的mysql，暂时只启用一个mysql实体，读写一体。后续会根据需要进行扩展，一主多从，读写分离。 缓存使用的redis，目前主要用于验证码，登录授权token等场景。">
@@ -324,7 +324,7 @@
 <li>项目管理工具 redmine，配置了系统邮件发送，整过这把才知道阿里云把vps的25号端口直接屏蔽了</li>
 <li>ci cd 集成服务 drone， 与gitlab服务做了集成，各种插件的使用遇到些许麻烦，push tag的时候，可使用tag名作为镜像名，但是对tag的名称做了严格限制，实际操作过程中没意识到，纠结了一小把。drone相对来说还是年轻了一丢丢，遇到问题并不能通过google很好的解决。最后放了大招，直接看源码，指导实践。简单解释下 ci （continuous integration）持续集成 cd （continuous delivery）持续发布。简单点说就是最大程度降低人工成本，提高生产力。机械重复的工作让机器来做。</li>
 <li>https 证书 <a href="https://github.com/Neilpang/acme.sh" target="_blank" rel="noopener">acme</a> 域名txt方式完成域名鉴权，支持多家域名服务商的api服务，可自动完成证书申请，有效期3个月，可自动完成证书更新操作，很nice</li>
-<li>上面提到的服务都是通过docker-compose的形式做的单机部署，没啥太大的干活，但是实现过程中的一些小的细节，攒下的经验还是挺有意思的。</li>
+<li>上面提到的服务都是通过docker-compose的形式做的单机部署，没啥太多的干货，但是实现过程中的一些小的细节，攒下的经验还是挺有意思的。</li>
 </ol>
 <h2 id="技术方案迭代"><a href="#技术方案迭代" class="headerlink" title="技术方案迭代"></a>技术方案迭代</h2><h3 id="媒体数据的接收，存储与下载"><a href="#媒体数据的接收，存储与下载" class="headerlink" title="媒体数据的接收，存储与下载"></a>媒体数据的接收，存储与下载</h3><ol>
 <li>在处理媒体数据时，常见方案，接收和下载都在脚本层完成，存储在本地文件系统或第三方云存储中。</li>
@@ -382,7 +382,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/22/文字注解红黑树/" rel="next" title="文字注解红黑树">
+              <a href="/2017/09/22/rbtree-note/" rel="next" title="文字注解红黑树">
                 <i class="fa fa-chevron-left"></i> 文字注解红黑树
               </a>
             

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一. 互斥锁主要用于线程间访问共用内存区域。主要接口及数据类型如下： 123#include &amp;lt;pthread.h&amp;gt;pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);int pth">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux并发同步控制">
+<meta property="og:url" content="http://www.shoupihou.site/2016/08/16/linux-concurrency-ctl/index.html">
+<meta property="og:site_name" content="皮猴的博客">
+<meta property="og:description" content="一. 互斥锁主要用于线程间访问共用内存区域。主要接口及数据类型如下： 123#include &amp;lt;pthread.h&amp;gt;pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);int pth">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-18T11:51:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux并发同步控制">
+<meta name="twitter:description" content="一. 互斥锁主要用于线程间访问共用内存区域。主要接口及数据类型如下： 123#include &amp;lt;pthread.h&amp;gt;pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);int pth">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.shoupihou.site/2016/08/16/linux-concurrency-ctl/"/>
+
+
+
+
+
+  <title>linux并发同步控制 | 皮猴的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">皮猴的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2016/08/16/linux-concurrency-ctl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="皮猴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux并发同步控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-16T00:00:00+08:00">
+                2016-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一-互斥锁"><a href="#一-互斥锁" class="headerlink" title="一. 互斥锁"></a>一. 互斥锁</h2><p>主要用于线程间访问共用内存区域。主要接口及数据类型如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);int pthread_mutex_lock(pthread_mutex_t *mutex);int pthread_mutex_unlock(pthread_mutex_t *mutex);</span><br></pre></td></tr></table></figure>
+<p>pthread_mutex_t类型变量可使用全局内存空间，栈空间，堆空间定义。加锁和解锁操作接口使用了特殊的内部机制实现对锁状态变更的原子操作，而无需使用系统调用。若锁已经处于被锁状态，则使用系统调用（futex() ），将当前线程切换到睡眠状态。互斥锁初始化接口pthread_mutex_init可设置互斥锁类型，以变更互斥锁在不同业务场景下的表现。如：</p>
+<ol>
+<li>对未加锁的互斥锁做解锁操作</li>
+<li>对多个资源访问，因加锁顺序引起的死锁场景</li>
+</ol>
+<a id="more"></a>
+<h2 id="二-条件变量"><a href="#二-条件变量" class="headerlink" title="二. 条件变量"></a>二. 条件变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pthread_cond_t cond = PTHREAD_COND_INITIALIZER;</span><br><span class="line">int pthread_cond_signal(pthread_cond_t *cond);int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);</span><br></pre></td></tr></table></figure>
+<p>一般配合互斥锁使用，提升程序并发效率。比如在生产者消费者业务模型下，多个生产者将资源生产出并放置到共用的内存区域，多个消费者将资源取出使用。但是每次访问临界区均将进行加解锁操作，此时其它所有线程若想加锁都将阻塞。而锁的获取对所有线程都是机会均等的，并不区分线程是生产者，还是消费者，也不会在对锁做加锁操作之前对当前是否存在资源做出预估。这造成了互斥锁的使用效率低下。在此场景下可条件变量可配合互斥锁完成工作。</p>
+<p>生产者在完成对临界区域的访问，完成生产后使用接口pthread_cond_signal通知生产完成事件。消费者在进入临界区后，若发现无资源，使用pthread_cond_wait接口，完成解锁操作，同时阻塞等待生产事件的完成通知。在收到生产完成的通知后，将恢复调度，进行加锁操作，再次判断资源数量，若无资源（可能存在多个消费者的并发操作）则再次执行pthread_cond_wait操作，等待资源生成。</p>
+<h2 id="三-信号量"><a href="#三-信号量" class="headerlink" title="三. 信号量"></a>三. 信号量</h2><p>linux信号量有两种实现，一种为unix分支system v实现，一种为posix实现。主要用于进程间同步。信号量对象存在于内核之中，通过相应接口完成信号量的创建以及相关操作。以下主要讲解posix实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sem_t *sem_open(const char *name, int oflag, .../* mode_t mode, unsigned int value */ );int sem_getvalue(sem_t *sem, int *sval);</span><br><span class="line">int sem_post(sem_t *sem);</span><br><span class="line">int sem_wait(sem_t *sem);</span><br></pre></td></tr></table></figure>
+<p>在生产者消费者模型中使用信号量，通常会新建3个信号量，1个信号量的初始值被设置为1，定位类似线程同步中的互斥锁。一个信号量设置为共享资源的最大资源数量，一个信号量设置为0（用于记录当前可用资源数量）。生产者在每次进入临界区之前，首先对记录着可用的资源剩余空间数量的信号量做wait操作，若无可用空间则阻塞。然后使用互斥锁信号量，进入临界区完成生产操作。在退出临界区时，释放互斥锁信号量，再对记录资源数量的信号量做post操作。消费者则反之。记录着剩余资源存储空间和当前可用资源量的两个信号量，作用与定位类似于线程同步中的条件变量。</p>
+<h2 id="四-文件锁"><a href="#四-文件锁" class="headerlink" title="四. 文件锁"></a>四. 文件锁</h2><p>两个接口flock，fcntl可用于对文件加锁。其中fcntl可以对文件的部分内容做锁定操作。advisory类型锁，即程序可忽视文件已经被加锁的状态，而对文件继续进行读写操作。文件锁可用以防止多个进程对同一文件同时进行操作，管理多进程对同一文件的操作。锁被记录在内核中文件对应的inode信息之中，信息中记录了当前持有锁的内核文件表表项。每次对文件的open操作，均会在内核的文件表中建立一个表项。表项记录了文件当前的打开模式，文件偏移等信息。每个进程私有信息之中，则包含有文件描述符数组，每个描述符指向内核文件表中的一个表项。描述符在使用dup或fork被复制。文件描述符本身只记录了一个标志位（使用fcntl设置），用于标志在执行exec系统调用时，文件描述符是否给新进程继续使用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    瘦皮猴
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.shoupihou.site/2016/08/16/linux-concurrency-ctl/" title="linux并发同步控制">http://www.shoupihou.site/2016/08/16/linux-concurrency-ctl/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/" rel="external nofollow" target="_blank">CC BY 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/12/linux-signal-part3/" rel="next" title="linux信号（三）">
+                <i class="fa fa-chevron-left"></i> linux信号（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/20/meta-learn/" rel="prev" title="学习方法论">
+                学习方法论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="瘦皮猴" />
+            
+              <p class="site-author-name" itemprop="name">瘦皮猴</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-互斥锁"><span class="nav-number">1.</span> <span class="nav-text">一. 互斥锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-条件变量"><span class="nav-number">2.</span> <span class="nav-text">二. 条件变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-信号量"><span class="nav-number">3.</span> <span class="nav-text">三. 信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-文件锁"><span class="nav-number">4.</span> <span class="nav-text">四. 文件锁</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">瘦皮猴</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

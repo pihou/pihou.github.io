@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="上一份工作中认识了同事A。同事A所在的游戏组制作的游戏是公司主要利润的来源。听说A君在职期间有段时间时常加班到凌晨两三点，常规的下班时间也是10点以后的事情了。后来A君辞职离开了广州，回到了自己的故乡西安。年初联系，已经入职HuaWei，做openstack开发。我问他HW会不会加班很严重，他的回答有点出乎我意料，说是每天基本8点多就下班了。年中再次联系，A君已经在考虑离职事宜了，起因是每周都会有">
+<meta name="description" content="lua的语法和常规的脚本很为接近，如果对某种脚本几位理解，写一点其它类型的脚本并没有什么特别需要注意的地方。程序语言无非就那些构成要素，变量定义，流程控制，循环控制，函数，类，模块，垃圾回收。常规的使用并不需要深入太多细节。在特定的编程背景－openresty下，lua本生并不会成为编写openresty的阻力。自己在实际实现设计需求的过程中，也只是过过一遍lua核心语法后，按照记忆去书写需要实现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="狼文化浅谈">
-<meta property="og:url" content="http://www.shoupihou.site/2016/08/28/wolf-culture/index.html">
+<meta property="og:title" content="openresty使用总结">
+<meta property="og:url" content="http://www.shoupihou.site/2018/04/03/using-openresty/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="上一份工作中认识了同事A。同事A所在的游戏组制作的游戏是公司主要利润的来源。听说A君在职期间有段时间时常加班到凌晨两三点，常规的下班时间也是10点以后的事情了。后来A君辞职离开了广州，回到了自己的故乡西安。年初联系，已经入职HuaWei，做openstack开发。我问他HW会不会加班很严重，他的回答有点出乎我意料，说是每天基本8点多就下班了。年中再次联系，A君已经在考虑离职事宜了，起因是每周都会有">
+<meta property="og:description" content="lua的语法和常规的脚本很为接近，如果对某种脚本几位理解，写一点其它类型的脚本并没有什么特别需要注意的地方。程序语言无非就那些构成要素，变量定义，流程控制，循环控制，函数，类，模块，垃圾回收。常规的使用并不需要深入太多细节。在特定的编程背景－openresty下，lua本生并不会成为编写openresty的阻力。自己在实际实现设计需求的过程中，也只是过过一遍lua核心语法后，按照记忆去书写需要实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T11:55:16.000Z">
+<meta property="og:updated_time" content="2018-04-03T06:46:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="狼文化浅谈">
-<meta name="twitter:description" content="上一份工作中认识了同事A。同事A所在的游戏组制作的游戏是公司主要利润的来源。听说A君在职期间有段时间时常加班到凌晨两三点，常规的下班时间也是10点以后的事情了。后来A君辞职离开了广州，回到了自己的故乡西安。年初联系，已经入职HuaWei，做openstack开发。我问他HW会不会加班很严重，他的回答有点出乎我意料，说是每天基本8点多就下班了。年中再次联系，A君已经在考虑离职事宜了，起因是每周都会有">
+<meta name="twitter:title" content="openresty使用总结">
+<meta name="twitter:description" content="lua的语法和常规的脚本很为接近，如果对某种脚本几位理解，写一点其它类型的脚本并没有什么特别需要注意的地方。程序语言无非就那些构成要素，变量定义，流程控制，循环控制，函数，类，模块，垃圾回收。常规的使用并不需要深入太多细节。在特定的编程背景－openresty下，lua本生并不会成为编写openresty的阻力。自己在实际实现设计需求的过程中，也只是过过一遍lua核心语法后，按照记忆去书写需要实现">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2016/08/28/wolf-culture/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/04/03/using-openresty/"/>
 
 
 
 
 
-  <title>狼文化浅谈 | 皮猴的博客</title>
+  <title>openresty使用总结 | 皮猴的博客</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2016/08/28/wolf-culture/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/04/03/using-openresty/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">狼文化浅谈</h1>
+          <h1 class="post-title" itemprop="name headline">openresty使用总结</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-28T00:00:00+08:00">
-                2016-08-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T14:01:00+08:00">
+                2018-04-03
               </time>
             
 
@@ -304,13 +304,11 @@
       
 
       
-        <p>上一份工作中认识了同事A。同事A所在的游戏组制作的游戏是公司主要利润的来源。听说A君在职期间有段时间时常加班到凌晨两三点，常规的下班时间也是10点以后的事情了。后来A君辞职离开了广州，回到了自己的故乡西安。年初联系，已经入职HuaWei，做openstack开发。我问他HW会不会加班很严重，他的回答有点出乎我意料，说是每天基本8点多就下班了。年中再次联系，A君已经在考虑离职事宜了，起因是每周都会有1-2次通宵加班。</p>
-<a id="more"></a>
-<p>这个时代的节奏近乎疯狂，人类工作的极限到底在哪儿？HW已经是一个世界级的巨头了，HW巨大的成功以及HW背后的狼文化，深深的吸引着互联网时代的所有人，从巨擘到小贩。百度李老板希望改造公司DNA，引入狼性文化，向华为学习，百度被戏谑了狼厂。史玉柱的大白兔理论，要把巨人从兔子窝改造成狼窝。而这些举措在执行层面，更多的是单单肤浅的强调加班了。因为HW的狼文化的突出特点便是极为凶狠的加班。在我看来这是一个种本末倒置，不是因为加班才成功，而是因为公司正在成功的快速通道上所以才加班。是成功才加班，而不是加班才成功。</p>
-<p>或许老板们强调加班只是想要更快速的试错。可是你让你的小弟天天像打鸡血了一般加班到深夜，持续的试错透支的终归是小弟们对工作，对生活的热情。假如说超5层以上的员工，在一般情况下能接受的是每天持续工作到晚八点，但是公司为了试错的效率，强制让员工加班到晚十点以后，一个周期又一个周期的让员工执行老板们指定的工作。一个接一个的试错，薪水却不见涨。这让人如何接受。</p>
-<p>“一鼓作气，再而衰，三而竭。彼竭我盈，故克之。”</p>
-<p>管理并非如何想着方儿的让员工如何爱上加班这般简单粗暴。狼性文化也不是简单的加班文化。狼群有协作，有目标，有肉吃。如果你让人高强度的去为你的认知不停的试错，而无丝毫悔意，极为傲慢，冷酷十足，你认为这便是管理，其实是你的无知。你希望公司成功，我也希望自己能成长，有收获，有价值，最好还能吃上两口肉，大家的目标其实是一致的，但是请真正做好管理。</p>
-<p>码农们被要求加班的极限在哪儿？或许有一天人类会发明一种药，吃完就不用睡觉了，我们可以24*7的工作。但是我们努力的工作难道不是为了更好的生活么？然而生活并非只有工作一种颜色。</p>
+        <p>lua的语法和常规的脚本很为接近，如果对某种脚本几位理解，写一点其它类型的脚本并没有什么特别需要注意的地方。程序语言无非就那些构成要素，变量定义，流程控制，循环控制，函数，类，模块，垃圾回收。常规的使用并不需要深入太多细节。在特定的编程背景－openresty下，lua本生并不会成为编写openresty的阻力。自己在实际实现设计需求的过程中，也只是过过一遍lua核心语法后，按照记忆去书写需要实现的功能，功能编写完成后，再运行检查细节，相对高效，感觉也很不错。<br><a id="more"></a><br>自己在实际工作过程中，需要openresty解决的问题是，实现一个动态的大文件上传下载的中间件。原本使用的是nginx，外加一个nginx upload module 扩展模块，但是尽管nginx本身的配置极为灵活丰富也无法达到程序语言的高度。上面的这个方案只能一定程度实现，nginx的动态反向代理，完成文件的下载操作。文件的上传也可以由nginx来搞定，但是无法由其动态的存储至分布式存储服务中，需要由业务层来实现。但是业务层是实用的多进程多线程模型。最终为了提供系统的吞吐量以及程序的运行效率，还是决定引入openresty，借助openresty的强大能力解决问题。</p>
+<p>对于常规的需求，参考<a href="https://moonbingbing.gitbooks.io/openresty-best-practices/" target="_blank" rel="noopener">openresty最佳实践</a> 中的案例已经能满足。设想下实用openresty的使用场景，可能更多的时候，是承担一定的api网关的角色，负责不同的后端组件之间的通信，整理通信响应组合数据反馈给客户端。ngx.location.capture 发出子请求，完成了上述业务场景的核心功能。</p>
+<p>但是各类基础组件方面，官方库并不会给人感觉很完善， 比如构建一个form-data的body，发送给上游服务之类的。或许是自己对openresty的了解还不是很深入的缘故吧，又或者大家通常只是轻度使用openresty来解决和自己遇到的类似的业务场景。另一个感受是 openresty 脚本部分和二进制部分 关系比较紧密，典型的情况，比如 ngx.req.set_body_file.</p>
+<p>ngx.req.set_body_file是自己在使用openresty过程中，遇到的最大的难题，使用google搜索相关资料，遇到问题的人并不多。具体的使用情形是，读取客户端发送过来的数据并存储至此盘后，向上游服务A申请鉴权，分配服务B存储url。收到服务A返回的数据，向服务B发送存储请求，此时在调用ngx.location.capture发送子请求前，通过set_body_file设置需要发送的文件，本来按照api参考文档的说明，如果子请求不带data数据，将继承主请求的数据的，但是不知为何无法完成上述的操作，一只提示错误。自己一度怀疑set_body_file的使用姿势不太对，最终在openresty的测试用例中发现这个操作需要结合openresty的二进制部分来完成。所以最后的方案是，在发出子请求时，将要传输的文件名，贮存在请求头部中，在内部响应的location，rewrite阶段再食用set_body_file完成文件的传输操作。</p>
+<p>上述实现的<a href="https://github.com/pihou/services/blob/master/longban_cluster/openresty/media.lua" target="_blank" rel="noopener">源码</a>, 内含nginx的配置文件。</p>
 
       
     </div>
@@ -331,7 +329,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2016/08/28/wolf-culture/" title="狼文化浅谈">http://www.shoupihou.site/2016/08/28/wolf-culture/</a>
+    <a href="http://www.shoupihou.site/2018/04/03/using-openresty/" title="openresty使用总结">http://www.shoupihou.site/2018/04/03/using-openresty/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -353,8 +351,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/20/meta-learn/" rel="next" title="学习方法论">
-                <i class="fa fa-chevron-left"></i> 学习方法论
+              <a href="/2018/01/19/startup-tech-framework/" rel="next" title="startup技术框架">
+                <i class="fa fa-chevron-left"></i> startup技术框架
               </a>
             
           </div>
@@ -362,10 +360,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/20/go-grammar-handbook/" rel="prev" title="go语法速查手册">
-                go语法速查手册 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

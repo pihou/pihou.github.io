@@ -229,6 +229,131 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/07/k8s-invaded/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="皮猴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/07/k8s-invaded/" itemprop="url">记一次k8s集群被入侵始末</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T00:00:00+08:00">
+                2018-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在编写完k8s集群一键部署<a href="https://github.com/pihou/k8s-ansible" target="_blank" rel="noopener">ansible脚本</a>，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。</p>
+<p>大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署资源拉取了centos镜像，在镜像通过curl获取特定主机的配置文件，以及程序文件，并做了10倍冗余（replicas）。攻击者很鸡贼，并未将cpu资源消耗光，所以如果不实际查看集群状态，并不容易得知异常。跟踪到相应的站点查看信息，发现攻击者在用集群挖矿（坑爹）。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/07/k8s-invaded/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/04/03/using-openresty/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -302,7 +427,7 @@
           <p>lua的语法和常规的脚本很为接近，如果对某种脚本几位理解，写一点其它类型的脚本并没有什么特别需要注意的地方。程序语言无非就那些构成要素，变量定义，流程控制，循环控制，函数，类，模块，垃圾回收。常规的使用并不需要深入太多细节。在特定的编程背景－openresty下，lua本生并不会成为编写openresty的阻力。自己在实际实现设计需求的过程中，也只是过过一遍lua核心语法后，按照记忆去书写需要实现的功能，功能编写完成后，再运行检查细节，相对高效，感觉也很不错。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/03/using-openresty/#espandi" rel="contents">
+            <a class="btn" href="/2018/04/03/using-openresty/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -428,7 +553,7 @@
 <li>缓存使用的redis，目前主要用于验证码，登录授权token等场景。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/19/startup-tech-framework/#espandi" rel="contents">
+            <a class="btn" href="/2018/01/19/startup-tech-framework/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -558,7 +683,7 @@
 <li><p>case2 如果节点P为黑色，则添加完成，因为节点N为红色，整个树的高度保持不变；</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/22/rbtree-note/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/22/rbtree-note/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -685,7 +810,7 @@
 <p>这些系统属性可通过以下java源码打印出:<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/06/java-class-find-resolve/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/06/java-class-find-resolve/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -814,7 +939,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/05/java-volatile-resolve/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/05/java-volatile-resolve/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -939,7 +1064,7 @@
 <p>为了解决心中的疑问，最近详细阅读了tcp／ip详解的dns部分，并在网上搜寻资料，希望能够得到解答。事实证明，运维太挫了，鄙视下。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/07/30/little-thinking-about-dns/#espandi" rel="contents">
+            <a class="btn" href="/2017/07/30/little-thinking-about-dns/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1063,7 +1188,7 @@
           <p>实际工作中对python多线程技术的使用少之又少。一直以来并未对python的多线程做过多深入。uwsgi在启动http服务时可以启动多进程和多线程。但是日常开发实际多数时候并不用关心多线程，一方面是uwsgi模块已经封装的很完善，另一方面则是因为http的无状态设计，在开放过程中涉及到使用全局变量的情形基本没有。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/07/16/python-multithread-resolve/#espandi" rel="contents">
+            <a class="btn" href="/2017/07/16/python-multithread-resolve/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1194,7 +1319,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/11/tcp-protocol/#espandi" rel="contents">
+            <a class="btn" href="/2017/06/11/tcp-protocol/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1319,131 +1444,7 @@
 <p><a href="http://coolshell.cn/articles/4914.html" target="_blank" rel="noopener">新浪微博的xss攻击</a>一文对攻击发生的核心并未做阐明，可能耗子叔认为起因显而易见，无需赘述。但是对于自己而言，背后的原理并不是很清晰。所以在反复阅读原文及攻击源码的同时，在网上也搜集了其它资料与网友的观点。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/30/xss-example/#espandi" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="瘦皮猴">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="皮猴的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/12/something-about-mapreduce/" itemprop="url">不懂装懂 MapReduce</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T00:00:00+08:00">
-                2017-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/12/something-about-mapreduce/#espandi" rel="contents">
+            <a class="btn" href="/2017/05/30/xss-example/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1535,7 +1536,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

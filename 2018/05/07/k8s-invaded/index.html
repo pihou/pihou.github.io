@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
+<meta name="description" content="在编写完k8s集群一键部署ansible脚本，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。 大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不懂装懂 MapReduce">
-<meta property="og:url" content="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/index.html">
+<meta property="og:title" content="记一次k8s集群被入侵始末">
+<meta property="og:url" content="http://www.shoupihou.site/2018/05/07/k8s-invaded/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
+<meta property="og:description" content="在编写完k8s集群一键部署ansible脚本，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。 大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T12:36:10.000Z">
+<meta property="og:updated_time" content="2018-05-06T07:53:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不懂装懂 MapReduce">
-<meta name="twitter:description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
+<meta name="twitter:title" content="记一次k8s集群被入侵始末">
+<meta name="twitter:description" content="在编写完k8s集群一键部署ansible脚本，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。 大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/05/07/k8s-invaded/"/>
 
 
 
 
 
-  <title>不懂装懂 MapReduce | 皮猴的博客</title>
+  <title>记一次k8s集群被入侵始末 | 皮猴的博客</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/07/k8s-invaded/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">不懂装懂 MapReduce</h1>
+          <h1 class="post-title" itemprop="name headline">记一次k8s集群被入侵始末</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T00:00:00+08:00">
-                2017-05-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T00:00:00+08:00">
+                2018-05-07
               </time>
             
 
@@ -304,10 +304,18 @@
       
 
       
-        <p>工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.</p>
+        <p>在编写完k8s集群一键部署<a href="https://github.com/pihou/k8s-ansible" target="_blank" rel="noopener">ansible脚本</a>，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。</p>
+<p>大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署资源拉取了centos镜像，在镜像通过curl获取特定主机的配置文件，以及程序文件，并做了10倍冗余（replicas）。攻击者很鸡贼，并未将cpu资源消耗光，所以如果不实际查看集群状态，并不容易得知异常。跟踪到相应的站点查看信息，发现攻击者在用集群挖矿（坑爹）。</p>
 <a id="more"></a>
-<p>后续为此专门查阅了MapReduce,相关概念. 简单来说,MapReduce,是在做数据统计运算是的两个步骤, 一个是Map, 一个是Reduce, 和Python的内建函数相类似的, Map是在做数据统计前的加工处理, Reduce则是在计算最终需要的统计数据. 这些统计数据之前并无依赖性,可以放在分布式集群中,多机器并行计算. MapReduce,只是这种算法的思想核心而已. 快也仅仅只是因为算法的本身而已, 和实际程序执行效率并无关系. 重点是在与分布式,并发执行. </p>
-<p>但是,同事的说法就很让人无语了,我们可不可以不要这么肤浅. 玩概念还玩的这么逗比的. 我个人是极为讨厌半懂不懂还装模作样的.为此自己还专门翻看了python Map Reduce的实现, 也不是什么黑魔法,和使用脚本去写实现也没啥大区别,只是在c层简单封装了一层仅此而已. 更何况仅仅Map Reduce并不能为完全代表MapReduce的全部思想与实现,单单是两个核心实现函数而已.</p>
+<p>发生这样的事情，脑海里第一个念头，是黑客到底是如何入侵到自己的服务器的。仔细检查了服务器的secure日志，尽管有人尝试ssh连接，但是并未获得成功。ssh也未开启用户名密码登陆。last登录日志也是正常的。思路中断，本来一直以为是ssh被入侵了。</p>
+<p>转念一想，既然最终是入侵了k8s集群，那肯定是拿到了相应的权限，和认证。那能否通过k8s的审计日志确认操作者的身份，以及操作时间了。暂时通过k8s dashboard关闭被入侵部署的部署资源，研究k8s的审计日志。google搜索后，才发现，审计日志并未开启，需要配置api-server的启动选项 –audit-policy-file –audit-webhook-config-file。详细配置选项可查阅，<a href="https://kubernetes.io/docs/tasks/debug-application-cluster/audit/" target="_blank" rel="noopener">k8s官方文档</a>。</p>
+<ol>
+<li>简单点说audit-policy-file，决定审计日志对谁，在什么操作，在什么条件下，记录什么样详细程度的日志；</li>
+<li>audit-webhhok-config-file, 决定将日志发送给谁，由谁来保存（这里也可以存入本地磁盘，但并未采用）；</li>
+</ol>
+<p>在bala bala，完成这些配置，接下来就要研究日志的接受方，logstash的配置问题了。当然作为一个强大的it从业者，良好的检索资料，以及查阅资料，最后的反复实操时必不可少的。集群在之前已经开启了日志服务， elk三大组件。业务系统api的访问日志，是通过python第三方库，通过tcp接入到logstash的。刚开始并未意识到kube-apiserver发送到logstash的审计日志是通过http形式的，logstash的input依然使用的tcp，导致了日志录入错误。在查找到靠谱的<a href="https://www.elastic.co/guide/en/logstash/current/plugins-filters-split.html" target="_blank" rel="noopener">logstash资料</a>后，当然也就快速的搞定了。</p>
+<p>搞定完以上配置，剩下的就是等待集群被在此入侵，查找相应的审计日志。当然为了确定实际生成部署所使用的url，还必须要阅读k8s的<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#-strong-write-operations-strong--93" target="_blank" rel="noopener">api文档</a>，当然，无一例外的是这里也有坑，估计是api接口太过庞杂，chrome实在是无法正常查看这些api，改用firfox，解决之，这里肯定下rust。审计日志相应事件的用户组为system:masters, system:authenticated，但是用户为system:unsecured，这里就有点奇怪了。为什么用户组还是已经授权的了。再以用户system:unsecured为关键词检索日志，发现系统中存在大量的此用户操作，sourceip字段为集群其它节点的内网ip。回忆起，再配置apiserver时，有一个–insecure-bind-address,填写了非回环地址，估计是这里闯的祸。通过postman访问kube-apiserver api接口 8080端口，发现无需任何鉴权即可完成接口调用。验证猜想，修改之。集群就此安静下来了。</p>
+<p>后记： 实在是没想到k8s存在这样无需鉴权就可操作的入口，一直以为尽管是http接口，但是也会有基本的token鉴权之类的限制的。当然通过这次操作也极大的加深了对k8s的了解程度。后续也积极准备更多的安全措施，比如各namespace的cpu，内存限额。可参见<a href="https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/" target="_blank" rel="noopener">官方安全操作手册</a></p>
 
       
     </div>
@@ -328,7 +336,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/" title="不懂装懂 MapReduce">http://www.shoupihou.site/2017/05/12/something-about-mapreduce/</a>
+    <a href="http://www.shoupihou.site/2018/05/07/k8s-invaded/" title="记一次k8s集群被入侵始末">http://www.shoupihou.site/2018/05/07/k8s-invaded/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -350,8 +358,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/23/autotools-learn-note/" rel="next" title="autotools个人备忘">
-                <i class="fa fa-chevron-left"></i> autotools个人备忘
+              <a href="/2018/04/03/using-openresty/" rel="next" title="openresty使用总结">
+                <i class="fa fa-chevron-left"></i> openresty使用总结
               </a>
             
           </div>
@@ -359,10 +367,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/30/xss-example/" rel="prev" title="xss攻击案例分析">
-                xss攻击案例分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T10:33:43.000Z">
+<meta property="og:updated_time" content="2018-05-12T10:35:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="好吧...k8s再次被侵入">
 <meta name="twitter:description" content="这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自">
@@ -356,7 +356,7 @@
 <li>dashboard的cpu 内存统计图表没了，预计是heapster采集数据是需要通过kubelet api的，要做相应调整了</li>
 <li>dashboard不能直接登录pod了，权限没了，估计登录操作也是要走kubelet api的</li>
 </ol>
-<p>为了解决上面的问题，还需要再配置下相应的服务（这次时间的pod的cpu为啥会暴增，我也没搞清楚，留次探索给自己）。第一点的解决，heapster的确是依赖于kubelet api来采集数据的，根据<a href="https://github.com/kubernetes/heapster/blob/master/docs/source-configuration.md" target="_blank" rel="noopener">heapster配置说明</a> 修改了其访问kubelet api相关配置，结合其pod日志综合解决问题。第二点实际是自己在做apiserver配置错误了。–kubelet-certificate-authority 配置是不需要的，根据其字面意思这个配置是用来验证kuberlet 连接到apiserver时的客户端证书的，因为自己的配置走的tls-bootstrap，这里无需配置。–kubelet-client-certificate –kubelet-client-key 这两个配置项则是用于apiserver调用kubelet api时，用于kubelet api服务鉴别客户端权限使用的。kubelet api服务鉴权，可以通过证书中的用户名以及bear token 两种形式来搞定。apiserver这边只能通过客户端证书形式<br>完成鉴权（根据其所有配置项推知）</p>
+<p>为了解决上面的问题，还需要再配置下相应的服务（这次时间的pod的cpu为啥会暴增，我也没搞清楚，留次探索给自己）。第一点的解决，heapster的确是依赖于kubelet api来采集数据的，根据<a href="https://github.com/kubernetes/heapster/blob/master/docs/source-configuration.md" target="_blank" rel="noopener">heapster配置说明</a> 修改了其访问kubelet api相关配置，结合其pod日志综合解决问题。第二点实际是自己在做apiserver配置错误了。–kubelet-certificate-authority 配置是不需要的，根据其字面意思这个配置是用来验证kuberlet 连接到apiserver时的客户端证书的，因为自己的配置走的tls-bootstrap，这里无需配置。–kubelet-client-certificate –kubelet-client-key 这两个配置项则是用于apiserver调用kubelet api时，用于kubelet api服务鉴别客户端权限使用的。kubelet api服务鉴权，可以通过证书中的用户名以及bear token 两种形式来搞定。apiserver这边只能通过客户端证书形式完成鉴权（根据其所有配置项推知）</p>
 <p>最后感慨下，英文还是一定要好啊，中文搜索实在是没有太多线索，英文本来是搜的kubelet invaded也找不到多少有用的信息，kubelet been hacked 检索第一条就是超有用的文章了。盛赞一下，也感慨下。中文世界实在是太多粗编乱造的文章，英文对一个技术人真是太过重要。</p>
 <p>就让服务再裸奔一段时间吧，让问题暴露的更多更充分吧！</p>
 

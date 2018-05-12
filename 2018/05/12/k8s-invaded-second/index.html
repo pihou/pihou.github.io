@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="k8s," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="请配合维基百科阅读编码实现 一. 节点添加（请配合维基百科查看此文） 按照查找二叉树的规则压入节点，节点在压入后，将位于非叶节点的最底层。此时将新压入节点的含义泛化，将其理解为一颗子树的根节点。这个子树的每条路径的黑色节点长度都被新增了1.破坏了红黑树的平衡，为此需要后续调整（如果节点最终选定为黑色）2. 需要考虑其父节点颜色，以保持红黑树约束（如果节点选定为红色）；  case1 如果节点N（含">
+<meta name="description" content="这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自">
+<meta name="keywords" content="k8s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="文字注解红黑树">
-<meta property="og:url" content="http://www.shoupihou.site/2017/09/22/rbtree-note/index.html">
+<meta property="og:title" content="好吧...k8s再次被侵入">
+<meta property="og:url" content="http://www.shoupihou.site/2018/05/12/k8s-invaded-second/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="请配合维基百科阅读编码实现 一. 节点添加（请配合维基百科查看此文） 按照查找二叉树的规则压入节点，节点在压入后，将位于非叶节点的最底层。此时将新压入节点的含义泛化，将其理解为一颗子树的根节点。这个子树的每条路径的黑色节点长度都被新增了1.破坏了红黑树的平衡，为此需要后续调整（如果节点最终选定为黑色）2. 需要考虑其父节点颜色，以保持红黑树约束（如果节点选定为红色）；  case1 如果节点N（含">
+<meta property="og:description" content="这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T12:48:52.000Z">
+<meta property="og:updated_time" content="2018-05-12T03:00:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文字注解红黑树">
-<meta name="twitter:description" content="请配合维基百科阅读编码实现 一. 节点添加（请配合维基百科查看此文） 按照查找二叉树的规则压入节点，节点在压入后，将位于非叶节点的最底层。此时将新压入节点的含义泛化，将其理解为一颗子树的根节点。这个子树的每条路径的黑色节点长度都被新增了1.破坏了红黑树的平衡，为此需要后续调整（如果节点最终选定为黑色）2. 需要考虑其父节点颜色，以保持红黑树约束（如果节点选定为红色）；  case1 如果节点N（含">
+<meta name="twitter:title" content="好吧...k8s再次被侵入">
+<meta name="twitter:description" content="这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2017/09/22/rbtree-note/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/05/12/k8s-invaded-second/"/>
 
 
 
 
 
-  <title>文字注解红黑树 | 皮猴的博客</title>
+  <title>好吧...k8s再次被侵入 | 皮猴的博客</title>
   
 
 
@@ -232,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/09/22/rbtree-note/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/12/k8s-invaded-second/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -249,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">文字注解红黑树</h1>
+          <h1 class="post-title" itemprop="name headline">好吧...k8s再次被侵入</h1>
         
 
         <div class="post-meta">
@@ -261,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T00:00:00+08:00">
-                2017-09-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T00:00:00+08:00">
+                2018-05-12
               </time>
             
 
@@ -280,9 +281,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/22/rbtree-note/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/12/k8s-invaded-second/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/09/22/rbtree-note/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/12/k8s-invaded-second/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -315,58 +316,29 @@
       
 
       
-        <p>请配合<a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree" target="_blank" rel="noopener">维基百科</a>阅读<br><a href="https://github.com/pihou/wheels/blob/master/rbtree.py" target="_blank" rel="noopener">编码实现</a></p>
-<h2 id="一-节点添加（请配合维基百科查看此文）"><a href="#一-节点添加（请配合维基百科查看此文）" class="headerlink" title="一. 节点添加（请配合维基百科查看此文）"></a>一. 节点添加（请配合维基百科查看此文）</h2><ol>
-<li><p>按照查找二叉树的规则压入节点，节点在压入后，将位于非叶节点的最底层。此时将新压入节点的含义泛化，将其理解为一颗子树的根节点。这个子树的每条路径的黑色节点长度都被新增了1.破坏了红黑树的平衡，为此需要后续调整（如果节点最终选定为黑色）2. 需要考虑其父节点颜色，以保持红黑树约束（如果节点选定为红色）；</p>
-</li>
-<li><p>case1 如果节点N（含义见百科），没有父节点，则整个添加过程完成，整个红黑树的长度被增高一个节点，将节点设置为黑色；</p>
-</li>
-<li><p>case2 如果节点P为黑色，则添加完成，因为节点N为红色，整个树的高度保持不变；</p>
+        <p>这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自己极为困惑。稍作分析后惊觉节点上的cpu负载已经爆满。查看节点上的pod，发现某个pod，cpu负载异常的高。登录相应节点，发现了异常的 高负载的进程。</p>
 <a id="more"></a>
-</li>
-<li><p>case3 如果节点P为红色，且节点U为红色，则将节点G与P，U节点颜色互换，则整个需要平衡的节点往上移动，节点G顶替节点N的位置；</p>
-</li>
-<li><p>case4 如果节点P红红色，节点U为黑色，且节点N为P的右子节点，则作出对应操作，为case5做准备</p>
-</li>
-<li><p>case5 变换位置旋转节点，恢复树的平衡</p>
-</li>
-</ol>
-<p>可以注意到，上述case已经覆盖了全部可能性，具备完备性；</p>
+<p>查看异常进程的/proc内各项进程信息，exec部分是一个符号链接，执行文件是一个意境被删除的/tmp内文件，但是可以通过cat /proc/[pid]/exec &gt; ~/invade_exe 将可执行文件导出，放置到<a href="https://www.virustotal.com/#/file/0934e478b2b750604f04f009545345991a7b84226745bf827eefbadf4a3181ba/detection" target="_blank" rel="noopener">检测站点</a>检测，确认是病毒无疑咯，但是这个病毒究竟是怎么被放置到服务器的了？嗯，这是个问题。</p>
 <ol>
-<li>P不存在 </li>
-<li>P为黑色，其它任意 </li>
-<li>P为红色，U为红色 </li>
-<li>P为红色，U为黑色，N为右子节点 </li>
-<li>P为红色，U为黑色，N为左子节点</li>
+<li>少许pod cpu负载异常的高</li>
+<li>/var/log/secure 并没有发现异常登录行为</li>
+<li>系统对外端口kuberlet暴露较多</li>
 </ol>
-<h2 id="二-节点移除（请配合维基百科查看此文）"><a href="#二-节点移除（请配合维基百科查看此文）" class="headerlink" title="二. 节点移除（请配合维基百科查看此文）"></a>二. 节点移除（请配合维基百科查看此文）</h2><ol>
-<li><p>首先红黑树是一个二叉查找树的特例.在移除红黑树的一个节点时,可将以此节点左子树最大节点(或其右子树最小节点)复制到被移除节点处.如此移除的问题将被转换为如何从树的底部将一个最多有一个真子节点(不是叶子的子节点)的节点移除的问题(为什么最多只有一个真子节点,因为这个节点是这子树的最大值或最小值).</p>
-</li>
-<li><p>如果要移除的节点为红色,则根据红黑树的约束,其肯定没有真子节点,此时可将其直接移除而且不会违背红黑树约束;</p>
-</li>
-<li><p>如果被移除节点为黑色,则可推知,它的真子节点只可能是红色,此时将此子节点取代被移除节点即可,并将子节点修改为黑色;</p>
-</li>
-<li><p>如果被移除节点为黑色,其真子节点不为红色的话,则可推知其无真子节点.此时将其移除,经过此节点的简单路径,黑色节点数量均减1.为此需要后续操作补回.在这种情况下,后续实际参数操作的节点实际为叶子节点(顶替被移除的黑色节点);</p>
-</li>
-<li><p>case 1. 如果节点N(沿用百科中称谓, 补充说明下,此时节点N不应该被理解为待移除节点,而是应该被记忆为待调整子树的根节点,此时整个子树的黑色节点高度均被减1)没有父节点,则整个操作停止.(因为此时整个数的黑色节点高度都被减掉1了, 如果此时N为红色,将其修改为黑色),未命中进入case2</p>
-</li>
-<li><p>case 2.如果节点S为红色(P节点, S节点, Sr节点)必定为黑色,此时的操作可以视为是为case4做过渡,case4可以将红黑树的平衡恢复.</p>
-</li>
-<li><p>case 3. 如果节点S为黑,P为黑, 将S节点标红即可恢复P为根的子树的平衡,但是此时将需要恢复平衡的节点往上移了(这种情况也可视为向前收敛了,请想想case 1).</p>
-</li>
-<li><p>case 4. 如果节点P红, S黑, 则此时P与S互换颜色,整个树恢复平衡.</p>
-</li>
-<li><p>case 5. 如果节点P为黑, S也为黑, S的两个子节点颜色不一样,按照描述的,更改为case6做准备</p>
-</li>
-<li><p>case 6. 恢复整个树的平衡.</p>
-</li>
-</ol>
-<p>可以看到各种case已经包括了各种可能性,所以是完备自洽的.</p>
+<p>结合上述三点，初步断定是既有可能kuberlet暴露出的端口所致。当然我自己完全没有意识到kuberlet端口权限会这么大。参照这个思路，即有可能是kuberlet也提供了api服务，并且服务的鉴权并为开启。搜索了一下，kuberlet <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/" target="_blank" rel="noopener">cmd配置</a>果然提及了kuberlet api服务的存在，且提及了鉴权行为的存在（默认是放开操作的 😭）。但是至于api具体的可执行内容，多次搜索后，发觉kubernets并为公开api接口细节，估计要看照源码了。但是也找到了<a href="https://medium.com/handy-tech/analysis-of-a-kubernetes-hack-backdooring-through-kubelet-823be5c3d67c" target="_blank" rel="noopener">有价值的信息</a> 参照文中描述的操作，实际操作了一下，果然，之后就是吐血了。</p>
 <ol>
-<li>N为黑色, S为红色, P的颜色和S子节点的颜色也就固定了</li>
-<li>N为黑色, P为红色, S必为黑色,如果S的两个子节点颜色均为黑色(不平衡点网上移动)</li>
-<li>N为黑色, P为红色, S必为黑色,如果S的子节点颜色不一样,通过case5,为case6的平衡创造条件.</li>
+<li>清除异常进程</li>
+<li>检查crontab</li>
+<li>重新配置kubelet，开启api接口权限认证，关闭insecure port</li>
 </ol>
+<p>在出现问题之初，就坚定的想要确认问题，解决问题，因为未来的路还很长。如果要未来自己操盘处理k8s集群的话，现在的任何问题都不能有一丝懈怠，就当是在刷经验了。本来在阿里云上是做了vpc的，但是自己的服务是需要访问外网的，所以绑定了弹性ip，但是也就暴露了服务的所有端口。更安全的做法是做一个nat网关，但是网关12元每天，一个月也就360了，和一台服务器的价格一致，综合考虑后为老板省钱，后续再开启…</p>
+<p>在打开了kubelet权限认证后，副作用也来了（当然，也乘着这个机会更了解了kubernetes各组件）</p>
+<ol>
+<li>dashboard的cpu 内存统计图表没了，预计是heapster采集数据是需要通过kubelet api的，要做相应调整了</li>
+<li>dashboard不能直接登录pod了，权限没了，估计登录操作也是要走kubelet api的</li>
+</ol>
+<p>为了解决上面的问题，还需要再配置下相应的服务（这次时间的pod的cpu为啥会暴增，我也没搞清楚，留次探索给自己）</p>
+<p>最后感慨下，英文还是一定要好啊，中文搜索实在是没有太多线索，英文本来是搜的kubelet invaded也找不到多少有用的信息，kubelet been hacked 检索第一条就是超有用的文章了。盛赞一下，也感慨下。中文世界实在是太多粗编乱造的文章，英文对一个技术人真是太过重要。</p>
+<p>就让服务再裸奔一段时间吧，让问题暴露的更多更充分吧！</p>
 
       
     </div>
@@ -387,7 +359,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2017/09/22/rbtree-note/" title="文字注解红黑树">http://www.shoupihou.site/2017/09/22/rbtree-note/</a>
+    <a href="http://www.shoupihou.site/2018/05/12/k8s-invaded-second/" title="好吧...k8s再次被侵入">http://www.shoupihou.site/2018/05/12/k8s-invaded-second/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -400,6 +372,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
 
       
       
@@ -409,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/06/java-class-find-resolve/" rel="next" title="java类搜索浅析">
-                <i class="fa fa-chevron-left"></i> java类搜索浅析
+              <a href="/2018/05/07/k8s-invaded/" rel="next" title="记一次k8s集群被入侵始末">
+                <i class="fa fa-chevron-left"></i> 记一次k8s集群被入侵始末
               </a>
             
           </div>
@@ -418,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/19/startup-tech-framework/" rel="prev" title="startup技术框架">
-                startup技术框架 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -483,17 +457,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,22 +519,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-节点添加（请配合维基百科查看此文）"><span class="nav-number">1.</span> <span class="nav-text">一. 节点添加（请配合维基百科查看此文）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-节点移除（请配合维基百科查看此文）"><span class="nav-number">2.</span> <span class="nav-text">二. 节点移除（请配合维基百科查看此文）</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -747,9 +696,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2017/09/22/rbtree-note/';
-          this.page.identifier = '2017/09/22/rbtree-note/';
-          this.page.title = '文字注解红黑树';
+          this.page.url = 'http://www.shoupihou.site/2018/05/12/k8s-invaded-second/';
+          this.page.identifier = '2018/05/12/k8s-invaded-second/';
+          this.page.title = '好吧...k8s再次被侵入';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://pihou.disqus.com/embed.js';

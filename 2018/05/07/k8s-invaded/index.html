@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="k8s," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="在编写完k8s集群一键部署ansible脚本，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。 大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署">
+<meta name="keywords" content="k8s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次k8s集群被入侵始末">
 <meta property="og:url" content="http://www.shoupihou.site/2018/05/07/k8s-invaded/index.html">
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="在编写完k8s集群一键部署ansible脚本，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。 大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-06T07:53:02.000Z">
+<meta property="og:updated_time" content="2018-05-12T03:00:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次k8s集群被入侵始末">
 <meta name="twitter:description" content="在编写完k8s集群一键部署ansible脚本，并实际部署后. 陆陆续续将原有服务迁移至了k8s集群。k8s极为灵活强大，与之相对应的就是细节繁多，资源配置文件编写繁琐。 大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署">
@@ -360,6 +361,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
 
       
       
@@ -378,6 +385,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/12/k8s-invaded-second/" rel="prev" title="好吧...k8s再次被侵入">
+                好吧...k8s再次被侵入 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -459,7 +470,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -467,6 +478,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>

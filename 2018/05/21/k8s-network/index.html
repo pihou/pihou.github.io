@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="程序周边," />
+  <meta name="keywords" content="k8s," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番. 上手工程中主要遇到的问题包含  需要链接 python解释器, 文中的实例代码">
-<meta name="keywords" content="程序周边">
+<meta name="description" content="因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。">
+<meta name="keywords" content="k8s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="autotools个人备忘">
-<meta property="og:url" content="http://www.shoupihou.site/2017/02/23/autotools-learn-note/index.html">
+<meta property="og:title" content="k8s集群网络方案浅析">
+<meta property="og:url" content="http://www.shoupihou.site/2018/05/21/k8s-network/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番. 上手工程中主要遇到的问题包含  需要链接 python解释器, 文中的实例代码">
+<meta property="og:description" content="因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T03:22:14.000Z">
+<meta property="og:updated_time" content="2018-05-21T09:42:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="autotools个人备忘">
-<meta name="twitter:description" content="autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番. 上手工程中主要遇到的问题包含  需要链接 python解释器, 文中的实例代码">
+<meta name="twitter:title" content="k8s集群网络方案浅析">
+<meta name="twitter:description" content="因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2017/02/23/autotools-learn-note/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/05/21/k8s-network/"/>
 
 
 
 
 
-  <title>autotools个人备忘 | 皮猴的博客</title>
+  <title>k8s集群网络方案浅析 | 皮猴的博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/02/23/autotools-learn-note/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/21/k8s-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">autotools个人备忘</h1>
+          <h1 class="post-title" itemprop="name headline">k8s集群网络方案浅析</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-23T00:00:00+08:00">
-                2017-02-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T00:00:00+08:00">
+                2018-05-21
               </time>
             
 
@@ -301,9 +301,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/02/23/autotools-learn-note/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/21/k8s-network/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/02/23/autotools-learn-note/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/21/k8s-network/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -336,39 +336,30 @@
       
 
       
-        <p>autotools是gnu开发快速构建c,c++工程的一套工具链,主要包含automake, autoconf等.autoconf用于检测系统环境, automake用于生成makefile文件.今天找了篇新手快速上手的文章,迅速的体验了一把. 本来只有一个c文件可直接编译的,但是对这套工具链,听闻已久,很想体验一番.</p>
-<p>上手工程中主要遇到的问题包含</p>
-<ol>
-<li><p>需要链接 python解释器, 文中的实例代码并未涉及链接第三方库,需要自己琢磨,但是automake实际也相当繁杂,一时不太容易领悟要领.好在折腾正确了. 源码文件夹的 Makefile.am文件 LDFLAGS 使用制定在源码链接阶段的链接选项, 但是通过这种形式指定的选项,在链接时会放在使用到库的文件前面,导致链接找不到符号定义. **_LDADD,可以解决这个问题,但是一般的例子都是指定的变量,尝试着制定了python动态库的文件名,结果说无法生成此文件.最后通过指定连接文件的绝对路径解决此问题.</p>
-</li>
-<li><p>整套工具链较为繁杂,配置繁琐.</p>
-</li>
-</ol>
+        <p>因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。</p>
 <a id="more"></a>
-<hr>
-<p>本文主要用于个人备忘使用,并未对实际细节做深入描述</p>
-<p>主要生成文件介绍:</p>
+<p>以下先blabla一下，k8s大致的网络结构。</p>
 <ol>
-<li>configure.ac (autoscan生成)</li>
-<li>aclocal.m4 (aclocal生成)</li>
-<li>config.h.in (autoheader生成)</li>
-<li>Makefile.am (按规则手工编辑)</li>
-<li>Makefile.in (automake生成) </li>
+<li>docker容器引擎可以比拟为一个虚拟的单机网络集群，在上面运行的每个pod为一个虚拟的节点。这些节点之间的通信自成一体。在k8s集群中，如果这上面的pod需要和其它节点的pod通信，需要借助网络插件(flannel, calico)</li>
+<li>本文的网络方案主要以flannel vxlan为实现蓝本</li>
+<li>flannel 通常通过节点原生进程的方式运行，并新建虚拟网卡 flannel，新建路由表表项，承接pod与其它node之上的pod通信</li>
+<li>k8s多node间flannel网段的分配和查询，通过etcd集群来做管理</li>
 </ol>
-<p>主要步骤如下:</p>
+<p>尽管通过以上描述，对k8s的网络核心已经有了初步的了解。但当涉及到具体细节时，还是无法得到清晰的认知，一下将描述具体的通信案例，在此之前，我们需要总结下在k8s集群中的3种类型ip</p>
 <ol>
-<li>autocan 生成 configure.scan  mv configure.scan configure.ac</li>
-<li>configure.ac 修改 AC_INIT(FULL-PACKAGE-NAME, VERSION, BUG-REPORT-ADDRESS)</li>
-<li>autconf 生成 autom4te.cache configure</li>
-<li><p>根目录添加文件 Makefile.am ,文件内容<br>AUTOMAKE_OPTIONS = foreign<br>SUBDIRS = src doc examples man scripts</p>
-</li>
-<li><p>编辑src/Makefile.am<br>CFLAGS = –pedantic -Wall -std=c99 -O2<br>LDFLAGS =<br>bin_PROGRAMS = targetbinary1 targetbinary2 […] targetbinaryN<br>targetbinary1_SOURCES = targetbinary1.c myheader.h […]</p>
-</li>
-<li><p>vim configure.ac  在AM_INIT()后面加入<br>AM_INIT_AUTOMAKE(pippo, 2.6)<br>AC_OUTPUT(Makefile src/Makefile doc/Makefile examples/Makefile man/Makefile scripts/Makefile)</p>
-</li>
-<li><p>执行 aclocal ,   automake –add-missing ,  autoreconf –install<br>, autoconf 项目配置完成</p>
-</li>
+<li>node ip k8s集群节点ip</li>
+<li>pod ip k8s workload基本单元ip</li>
+<li>cluster ip 虚拟ip，用于k8s service的ip，辅以服务发现来实现高层次服务抽象，结偶具体的pod细节</li>
 </ol>
+<p>cluster ip的具体实现依赖于kube-proxy维护的iptables。在具体讲述生成的iptables表项前，在做出其它前置说明</p>
+<ol>
+<li>iptables基础推荐 <a href="http://cn.linux.vbird.org/linux_server/0250simple_firewall.php" target="_blank" rel="noopener">鸟哥的linux私房菜</a></li>
+<li>当然鸟哥的文章并未详细阐述防火墙的诸多细节，仅简单提及了各chain在规则命中后，chain的执行将中断</li>
+<li>但是实际规则链的执行存在不可中断的target 即存在 terminate-target non-terminate-target，跳转到其它自定义规则链将不会中断chain执行，可参见<a href="https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture" target="_blank" rel="noopener">文章</a></li>
+<li>iptables基本使用规则可用man指令，<a href="http://ipset.netfilter.org/iptables-extensions.man.html#lbAB" target="_blank" rel="noopener">扩展模块规则</a></li>
+<li>应该将docker的虚拟网口，flannel的虚拟网口，理解为一个真实的网口，一个路由器网关，网关的另一头是各个集群的pods。</li>
+</ol>
+<p>当然弄清上述规则后，好像也不用具体讲解iptables条目了，你可以查阅下iptables规则（iptables-save），在自己弄清iptable规则的过程中，最为坑爹的 查找一个相对权威的iptables执行规则。当然生成的规则里面也会有一些相对冗余的表项，略为加大了对网络方案的理解。</p>
 
       
     </div>
@@ -389,7 +380,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2017/02/23/autotools-learn-note/" title="autotools个人备忘">http://www.shoupihou.site/2017/02/23/autotools-learn-note/</a>
+    <a href="http://www.shoupihou.site/2018/05/21/k8s-network/" title="k8s集群网络方案浅析">http://www.shoupihou.site/2018/05/21/k8s-network/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -404,7 +395,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/程序周边/" rel="tag"># 程序周边</a>
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
           
         </div>
       
@@ -417,8 +408,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/04/story-inspiration/" rel="next" title="杂谈-讲故事与灵感">
-                <i class="fa fa-chevron-left"></i> 杂谈-讲故事与灵感
+              <a href="/2018/05/12/k8s-invaded-second/" rel="next" title="好吧...k8s再次被侵入">
+                <i class="fa fa-chevron-left"></i> 好吧...k8s再次被侵入
               </a>
             
           </div>
@@ -426,10 +417,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/12/something-about-mapreduce/" rel="prev" title="不懂装懂 MapReduce">
-                不懂装懂 MapReduce <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -730,9 +717,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2017/02/23/autotools-learn-note/';
-          this.page.identifier = '2017/02/23/autotools-learn-note/';
-          this.page.title = 'autotools个人备忘';
+          this.page.url = 'http://www.shoupihou.site/2018/05/21/k8s-network/';
+          this.page.identifier = '2018/05/21/k8s-network/';
+          this.page.title = 'k8s集群网络方案浅析';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://pihou.disqus.com/embed.js';

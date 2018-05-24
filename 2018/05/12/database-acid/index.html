@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="数据库, 操作系统," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="皮猴的博客">
-<meta property="og:url" content="http://www.shoupihou.site/archives/2016/page/2/index.html">
+<meta name="description" content="数据库事务核心概念 acid  a（atomicity）原子性，即事务内的操作为一个统一整体，要么操作均成功，要么操作均失败； c（consistency）一致性，即操作前后为统一整体符合实际需求，典型的例子是银行转账； i（isolation） 隔离，即事务和事务之间形成隔离，操作互不影响； d（durability）持久性，数据一旦发生修改，将持续有效。">
+<meta name="keywords" content="数据库, 操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库acid">
+<meta property="og:url" content="http://www.shoupihou.site/2018/05/12/database-acid/index.html">
 <meta property="og:site_name" content="皮猴的博客">
+<meta property="og:description" content="数据库事务核心概念 acid  a（atomicity）原子性，即事务内的操作为一个统一整体，要么操作均成功，要么操作均失败； c（consistency）一致性，即操作前后为统一整体符合实际需求，典型的例子是银行转账； i（isolation） 隔离，即事务和事务之间形成隔离，操作互不影响； d（durability）持久性，数据一旦发生修改，将持续有效。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-24T05:39:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="皮猴的博客">
+<meta name="twitter:title" content="数据库acid">
+<meta name="twitter:description" content="数据库事务核心概念 acid  a（atomicity）原子性，即事务内的操作为一个统一整体，要么操作均成功，要么操作均失败； c（consistency）一致性，即操作前后为统一整体符合实际需求，典型的例子是银行转账； i（isolation） 隔离，即事务和事务之间形成隔离，操作互不影响； d（durability）持久性，数据一旦发生修改，将持续有效。">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/archives/2016/page/2/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/05/12/database-acid/"/>
 
 
 
 
 
-  <title>归档 | 皮猴的博客</title>
+  <title>数据库acid | 皮猴的博客</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -234,262 +239,202 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 33 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/12/database-acid/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="瘦皮猴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="皮猴的博客">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">数据库acid</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T00:00:00+08:00">
+                2018-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2016">2016</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/12/database-acid/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/12/database-acid/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/10/linux-signal-part1/" itemprop="url">
-              
-                <span itemprop="name">linux信号（一）</span>
-              
-            </a>
-        
-      </h2>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-10T00:00:00+08:00"
-              content="2016-08-10" >
-          08-10
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/08/design-pattern/" itemprop="url">
-              
-                <span itemprop="name">常用设计模式简述</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-08T00:00:00+08:00"
-              content="2016-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/07/python-debug/" itemprop="url">
-              
-                <span itemprop="name">python调试技巧</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-07T00:00:00+08:00"
-              content="2016-08-07" >
-          08-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/06/python-decorator/" itemprop="url">
-              
-                <span itemprop="name">python装饰器与闭包</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-06T00:00:00+08:00"
-              content="2016-08-06" >
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>数据库事务核心概念 acid</p>
+<ol>
+<li>a（atomicity）原子性，即事务内的操作为一个统一整体，要么操作均成功，要么操作均失败；</li>
+<li>c（consistency）一致性，即操作前后为统一整体符合实际需求，典型的例子是银行转账；</li>
+<li>i（isolation） 隔离，即事务和事务之间形成隔离，操作互不影响；</li>
+<li>d（durability）持久性，数据一旦发生修改，将持续有效。</li>
+</ol>
+<a id="more"></a>
+<p>之前对数据库事务的理解一直受限于原子性。好吧，程序世界的名词真的很有限，而概念又太过繁多（再比如容器，tomcat是一种容器，docker是容器技术，list又是一种容器，而且英文统统用的container…）。事务的原子性被自己和操作系统的原子操作相混淆，操作系统的原子操作同时具备了acid的a和i了。</p>
+<p>根据自己的理解</p>
+<ol>
+<li>事务的a 更是一个逻辑概念而已，而非技术的实现层面的概念；</li>
+<li>事务的c 和 d 就更是一个业务层面实现的概念了，和使用的具体技术手段实际是隔了好几层的；</li>
+<li>事务的i，则和通常并发编程的常见互斥，同步手段极为接近。</li>
+</ol>
+<p>因为这两天有需要又重温了一下数据库的acid，对于自己还没吃透的概念，依旧之志不倦。感谢知乎的<a href="https://www.zhihu.com/question/30272728" target="_blank" rel="noopener">这篇问答</a></p>
+<p>至于实现隔离的常规技术手段的核心概念的理解，可以参看<a href="http://pages.cs.wisc.edu/~remzi/OSTEP/" target="_blank" rel="noopener">Operating Systems: Three Easy Pieces
+</a>。 用大白话来介绍下。悲观锁是使用操作系统汇编提供的一条原子指令，这个指令的执行是不可分割，不可被调度中断的（当然还有其它线程，进程同步的技术手段）。测试和设置同时进行，如果被设置的字段和被设置前预计的值不一致，则认为锁已经被他人拿取，反之则自己持有锁。未拿到锁的线程进入阻塞，等待锁的持有者唤醒。乐观锁，在未取得锁的情况下，并不陷入阻塞，而是短暂休眠等待再次获取锁的机会。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/05/python-coroutine/" itemprop="url">
-              
-                <span itemprop="name">深入浅出python协程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-05T00:00:00+08:00"
-              content="2016-08-05" >
-          08-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/04/nginx-http-framework/" itemprop="url">
-              
-                <span itemprop="name">nginx http框架初探</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-04T00:00:00+08:00"
-              content="2016-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    瘦皮猴
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.shoupihou.site/2018/05/12/database-acid/" title="数据库acid">http://www.shoupihou.site/2018/05/12/database-acid/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/" rel="external nofollow" target="_blank">CC BY 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库-操作系统/" rel="tag"># 数据库, 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/12/k8s-invaded-second/" rel="next" title="好吧...k8s再次被侵入">
+                <i class="fa fa-chevron-left"></i> 好吧...k8s再次被侵入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/21/k8s-network/" rel="prev" title="k8s集群网络方案浅析">
+                k8s集群网络方案浅析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2016/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2016/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -497,6 +442,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -732,6 +691,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -749,6 +712,18 @@
       <script id="dsq-count-scr" src="https://pihou.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://www.shoupihou.site/2018/05/12/database-acid/';
+          this.page.identifier = '2018/05/12/database-acid/';
+          this.page.title = '数据库acid';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://pihou.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   

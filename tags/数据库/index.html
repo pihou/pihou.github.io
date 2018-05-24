@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="程序语言,java," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,13 @@
 
 
 
-<meta name="description" content="java volatile 关键字浅析 查找volatile相关资料，提到最多的是两点  volatile可以禁止java的指令重排，防止同步异常； 被申明为volatile的变量，修改后对其他线程的可见性；">
-<meta name="keywords" content="程序语言,java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="java volatile浅析">
-<meta property="og:url" content="http://www.shoupihou.site/2017/09/05/java-volatile-resolve/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="皮猴的博客">
+<meta property="og:url" content="http://www.shoupihou.site/tags/数据库/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="java volatile 关键字浅析 查找volatile相关资料，提到最多的是两点  volatile可以禁止java的指令重排，防止同步异常； 被申明为volatile的变量，修改后对其他线程的可见性；">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T03:32:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java volatile浅析">
-<meta name="twitter:description" content="java volatile 关键字浅析 查找volatile相关资料，提到最多的是两点  volatile可以禁止java的指令重排，防止同步异常； 被申明为volatile的变量，修改后对其他线程的可见性；">
+<meta name="twitter:title" content="皮猴的博客">
 
 
 
@@ -120,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2017/09/05/java-volatile-resolve/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/tags/数据库/"/>
 
 
 
 
 
-  <title>java volatile浅析 | 皮猴的博客</title>
+  <title>标签: 数据库 | 皮猴的博客</title>
   
 
 
@@ -145,7 +140,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -239,196 +234,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>数据库<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/09/05/java-volatile-resolve/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="瘦皮猴">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="皮猴的博客">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">java volatile浅析</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2018/05/12/database-acid/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">数据库acid</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
-                2017-09-05
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/05/java-volatile-resolve/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/09/05/java-volatile-resolve/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-            </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>java volatile 关键字浅析</p>
-<p>查找volatile相关资料，提到最多的是两点</p>
-<ol>
-<li>volatile可以禁止java的指令重排，防止同步异常；</li>
-<li>被申明为volatile的变量，修改后对其他线程的可见性；</li>
-</ol>
-<a id="more"></a>
-<p>相对来说第一点确实复现的难度比较大，但是第二点的可见性让人有点摸不着头脑。网上也没有人给出具体的案例代码，至少不太容易找到。</p>
-<p>刚开始以为是一个线程修改了变量之后，其他线程读取同一变量不能拿到最新的变量值。但是写了点java代码，并不能重现出来。继续搜寻资料后，发现一篇相对靠谱的文章（虽然没有给出可复现的样例代码）。实际所说的可见性，实际上指的是，线程1在cpu核A修改了数值后，可能数值仍然保留在cpu核A的缓存，而未同步到主内存中。如果线程2在cpu核B，对这一数值读取操作，将无法立即同步上线程1的修改（但不会一直如此）。</p>
-<p>大白话就是上述这样，但是在网上找的帖子，会发现大家大都都是绕过去又绕回来。理论模型抛出一个又一个，我个人实际很怀疑写这些文章的人是否真的有意识到问题的本质。</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者：</strong>
-    瘦皮猴
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2017/09/05/java-volatile-resolve/" title="java volatile浅析">http://www.shoupihou.site/2017/09/05/java-volatile-resolve/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>
-    本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/" rel="external nofollow" target="_blank">CC BY 4.0</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-05-12T00:00:00+08:00"
+              content="2018-05-12" >
+          05-12
+        </time>
       </div>
-    
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/程序语言/" rel="tag"># 程序语言</a>
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/07/30/little-thinking-about-dns/" rel="next" title="dns浅析">
-                <i class="fa fa-chevron-left"></i> dns浅析
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/06/java-class-find-resolve/" rel="prev" title="java类搜索浅析">
-                java类搜索浅析 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -436,20 +289,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    </div>
-
-  
-
-
 
         </div>
         
@@ -685,10 +524,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
@@ -706,18 +541,6 @@
       <script id="dsq-count-scr" src="https://pihou.disqus.com/count.js" async></script>
     
 
-    
-      <script type="text/javascript">
-        var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2017/09/05/java-volatile-resolve/';
-          this.page.identifier = '2017/09/05/java-volatile-resolve/';
-          this.page.title = 'java volatile浅析';
-        };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://pihou.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      </script>
     
 
   

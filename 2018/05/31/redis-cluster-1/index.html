@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="k8s," />
+  <meta name="keywords" content="［“redis”, "分布式"］," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。">
-<meta name="keywords" content="k8s">
+<meta name="description" content="最近在试玩，测试redis集群。理论看的头晕，官方文档面面俱到，好是好，但是却很容易丢了重点，还是得上机器实际操作一番。google了一下，redis集群核心理论篇，这篇文章相对简明扼要的阐述的redis集群搭建的相关方式，但是感觉还是不是特简介，在此按照自己读后理解再做下复述。  redis集群方案，通常呈现3中形式。a. 官方集群方案(redis 3.0后推出)，b. 客户端集群方案，c. 中">
+<meta name="keywords" content="［“redis”, &quot;分布式&quot;］">
 <meta property="og:type" content="article">
-<meta property="og:title" content="k8s集群网络方案浅析">
-<meta property="og:url" content="http://www.shoupihou.site/2018/05/21/k8s-network/index.html">
+<meta property="og:title" content="redis集群（一）">
+<meta property="og:url" content="http://www.shoupihou.site/2018/05/31/redis-cluster-1/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。">
+<meta property="og:description" content="最近在试玩，测试redis集群。理论看的头晕，官方文档面面俱到，好是好，但是却很容易丢了重点，还是得上机器实际操作一番。google了一下，redis集群核心理论篇，这篇文章相对简明扼要的阐述的redis集群搭建的相关方式，但是感觉还是不是特简介，在此按照自己读后理解再做下复述。  redis集群方案，通常呈现3中形式。a. 官方集群方案(redis 3.0后推出)，b. 客户端集群方案，c. 中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-21T09:42:49.000Z">
+<meta property="og:updated_time" content="2018-05-31T09:40:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="k8s集群网络方案浅析">
-<meta name="twitter:description" content="因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。">
+<meta name="twitter:title" content="redis集群（一）">
+<meta name="twitter:description" content="最近在试玩，测试redis集群。理论看的头晕，官方文档面面俱到，好是好，但是却很容易丢了重点，还是得上机器实际操作一番。google了一下，redis集群核心理论篇，这篇文章相对简明扼要的阐述的redis集群搭建的相关方式，但是感觉还是不是特简介，在此按照自己读后理解再做下复述。  redis集群方案，通常呈现3中形式。a. 官方集群方案(redis 3.0后推出)，b. 客户端集群方案，c. 中">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2018/05/21/k8s-network/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/05/31/redis-cluster-1/"/>
 
 
 
 
 
-  <title>k8s集群网络方案浅析 | 皮猴的博客</title>
+  <title>redis集群（一） | 皮猴的博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/21/k8s-network/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/05/31/redis-cluster-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">k8s集群网络方案浅析</h1>
+          <h1 class="post-title" itemprop="name headline">redis集群（一）</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T00:00:00+08:00">
-                2018-05-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-31T00:00:00+08:00">
+                2018-05-31
               </time>
             
 
@@ -301,9 +301,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/05/21/k8s-network/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/31/redis-cluster-1/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/05/21/k8s-network/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/31/redis-cluster-1/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -336,30 +336,19 @@
       
 
       
-        <p>因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。</p>
+        <p>最近在试玩，测试redis集群。理论看的头晕，<a href="https://redis.io/documentation" target="_blank" rel="noopener">官方文档</a>面面俱到，好是好，但是却很容易丢了重点，还是得上机器实际操作一番。google了一下，<a href="https://www.zhihu.com/question/21419897" target="_blank" rel="noopener">redis集群核心理论篇</a>，这篇文章相对简明扼要的阐述的redis集群搭建的相关方式，但是感觉还是不是特简介，在此按照自己读后理解再做下复述。</p>
+<ol>
+<li>redis集群方案，通常呈现3中形式。a. 官方集群方案(redis 3.0后推出)，b. 客户端集群方案，c. 中间件方案；</li>
+<li>3种方案，简单点说差别在于，复杂的集群访问，异常处理处理的位置不一样，依次为 服务端，客户端，中间件，各自的优劣在此不做评价；</li>
+<li>在此对官方方案做重点阐述，其它方案本质类似。将所有存储空间分为不同的槽。要存储的数据，根据键值做哈希映射到槽，给不同的redis服务分配不同的槽范围。这些redis服务作为主服务，其后还有各自复制的从服务。主服务用于读写，从服务也可以用于读（这里和mysql主从类似）。发生异常时，从服务可以由sentinal选举为主服务，客户端可以访问任意一个槽服务，如果其需要设置的值不在此槽服务服务的方位内，将发生类似http302跳转的操作。当然还有很多其它细节，在此不表，应由浅入深。</li>
+</ol>
 <a id="more"></a>
-<p>以下先blabla一下，k8s大致的网络结构。</p>
-<ol>
-<li>docker容器引擎可以比拟为一个虚拟的单机网络集群，在上面运行的每个pod为一个虚拟的节点。这些节点之间的通信自成一体。在k8s集群中，如果这上面的pod需要和其它节点的pod通信，需要借助网络插件(flannel, calico)</li>
-<li>本文的网络方案主要以flannel vxlan为实现蓝本</li>
-<li>flannel 通常通过节点原生进程的方式运行，并新建虚拟网卡 flannel，新建路由表表项，承接pod与其它node之上的pod通信</li>
-<li>k8s多node间flannel网段的分配和查询，通过etcd集群来做管理</li>
-</ol>
-<p>尽管通过以上描述，对k8s的网络核心已经有了初步的了解。但当涉及到具体细节时，还是无法得到清晰的认知，一下将描述具体的通信案例，在此之前，我们需要总结下在k8s集群中的3种类型ip</p>
-<ol>
-<li>node ip k8s集群节点ip</li>
-<li>pod ip k8s workload基本单元ip</li>
-<li>cluster ip 虚拟ip，用于k8s service的ip，辅以服务发现来实现高层次服务抽象，结偶具体的pod细节</li>
-</ol>
-<p>cluster ip的具体实现依赖于kube-proxy维护的iptables。在具体讲述生成的iptables表项前，在做出其它前置说明</p>
-<ol>
-<li>iptables基础推荐 <a href="http://cn.linux.vbird.org/linux_server/0250simple_firewall.php" target="_blank" rel="noopener">鸟哥的linux私房菜</a></li>
-<li>当然鸟哥的文章并未详细阐述防火墙的诸多细节，仅简单提及了各chain在规则命中后，chain的执行将中断</li>
-<li>但是实际规则链的执行存在不可中断的target 即存在 terminate-target non-terminate-target，跳转到其它自定义规则链将不会中断chain执行，可参见<a href="https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture" target="_blank" rel="noopener">文章</a></li>
-<li>iptables基本使用规则可用man指令，<a href="http://ipset.netfilter.org/iptables-extensions.man.html#lbAB" target="_blank" rel="noopener">扩展模块规则</a></li>
-<li>应该将docker的虚拟网口，flannel的虚拟网口，理解为一个真实的网口，一个路由器网关，网关的另一头是各个集群的pods。</li>
-</ol>
-<p>当然弄清上述规则后，好像也不用具体讲解iptables条目了，你可以查阅下iptables规则（iptables-save），在自己弄清iptable规则的过程中，最为坑爹的 查找一个相对权威的iptables执行规则。当然生成的规则里面也会有一些相对冗余的表项，略为加大了对网络方案的理解。</p>
+<p>在网上找了一下kubernetes建redis集群的yaml<a href="https://github.com/kubernetes/charts/tree/master/stable/redis-ha" target="_blank" rel="noopener">配置文件</a>,实际测试了一下（感慨下，容器新时代就是好）。但是在各节点查询nodes信息，却查看到不一致的数据。分析后注意到，数据不一致的情况发生在跨node的pod间，按照官方文档，再次执行 meet操作，发现被meet的节点上,现实有服务正在和气握手，但是ip确不是我实际操作的redis节点的ip，而是一个目测做过snat的ip（好吧，昨天看理论外加实际操作，确实累了，没有警觉的发现这个ip的异常）。</p>
+<p>由此展开一些列的测试，加了echo server服务，简单高效的测试跨node的pod间的访问，服务端实际接收到的ip。tcpdump对网桥，物理网卡，flannel虚拟网口，做抓包测试。这里再感慨下，前些天，针对纯docker的容器服务，iptables通过log测试docker容器服务生成的iptable规则，帮了好些忙，大大的缩简了排查范围。所以整这些，说实在的，还是很需要综合素养的。</p>
+<p>在排查前，就根据经验，现象猜测出是flannel或者docker的配置问题，搜索flannel和docker的配置文档，发现它们各自都有一个–ip-masq实际也就是snat选项，刚开始还以为flannel的这个选项会实际影响docker的配置，两者是一个，后来实际测试，发现是错误的。</p>
+<p>flanneld的–ip-masq实际决定的是由pod发出的包在离开主机的时候是否需要做snat，实际实现，是在nat的postrouting链添加的如下规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-A POSTROUTING -s 172.30.0.0/16 -d 172.30.0.0/16 -j RETURN</span><br><span class="line">-A POSTROUTING -s 172.30.0.0/16 ! -d 224.0.0.0/4 -j MASQUERADE</span><br><span class="line">-A POSTROUTING ! -s 172.30.0.0/16 -d 172.30.0.0/16 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p>docker的–ip-masq则是决定在跨主机的pod访问时，是否做snat（mqsq），好吧， 最后好像跑题了，说redis的，扯到了k8s的网络方案了，后文待续中….</p>
 
       
     </div>
@@ -380,7 +369,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2018/05/21/k8s-network/" title="k8s集群网络方案浅析">http://www.shoupihou.site/2018/05/21/k8s-network/</a>
+    <a href="http://www.shoupihou.site/2018/05/31/redis-cluster-1/" title="redis集群（一）">http://www.shoupihou.site/2018/05/31/redis-cluster-1/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -395,7 +384,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/k8s/" rel="tag"># k8s</a>
+            <a href="/tags/［“redis”-分布式-］/" rel="tag"># ［“redis”, "分布式"］</a>
           
         </div>
       
@@ -408,8 +397,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/12/k8s-invaded-second/" rel="next" title="好吧...k8s再次被侵入">
-                <i class="fa fa-chevron-left"></i> 好吧...k8s再次被侵入
+              <a href="/2018/05/24/database-acid/" rel="next" title="数据库acid">
+                <i class="fa fa-chevron-left"></i> 数据库acid
               </a>
             
           </div>
@@ -417,10 +406,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/24/database-acid/" rel="prev" title="数据库acid">
-                数据库acid <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -721,9 +706,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2018/05/21/k8s-network/';
-          this.page.identifier = '2018/05/21/k8s-network/';
-          this.page.title = 'k8s集群网络方案浅析';
+          this.page.url = 'http://www.shoupihou.site/2018/05/31/redis-cluster-1/';
+          this.page.identifier = '2018/05/31/redis-cluster-1/';
+          this.page.title = 'redis集群（一）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://pihou.disqus.com/embed.js';

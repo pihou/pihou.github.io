@@ -338,7 +338,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/31/redis-cluster-1/#espandi" rel="contents">
+            <a class="btn" href="/2018/05/31/redis-cluster-1/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -479,7 +479,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/24/database-acid/#espandi" rel="contents">
+            <a class="btn" href="/2018/05/24/database-acid/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -614,7 +614,7 @@
           <p>因为在阿里云实际部署k8s集群的过程中，遇到了网络问题（node和其它node上的pod无法通信）。所以顺道折腾了一下iptables。当然顺道的也对k8s有了更多的了解，所以通常在实操的过程中遇到什么问题，也不是什么坏事，应该说是一个深入突破的机会。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/21/k8s-network/#espandi" rel="contents">
+            <a class="btn" href="/2018/05/21/k8s-network/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -749,7 +749,7 @@
           <p>这周三下午，k8s集群再次出现异常，nginx-ingress-controller突然宕掉了，而且重启很多次都失败。查看kubelet，docker引擎的journal日志，并没有发现明显异常，在容器启动后，容器进程会收到信号 sigterm 15号信号，但是并无法确认信号发送的起因。稍后晚些时间，发觉在同一节点的另一pod也发生了同样的情形，pod本生配置并无任何修改，且访问也无突发暴增，让自己极为困惑。稍作分析后惊觉节点上的cpu负载已经爆满。查看节点上的pod，发现某个pod，cpu负载异常的高。登录相应节点，发现了异常的 高负载的进程。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/12/k8s-invaded-second/#espandi" rel="contents">
+            <a class="btn" href="/2018/05/12/k8s-invaded-second/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -885,7 +885,7 @@
 <p>大约是上周，临近周末的最后几天，突然发现，k8s集群的cpu复杂高到了极限，粗粗留意了一下，在default namesapce下，莫名的多出了一个deployment资源，其下的pod容器，把将近所有的cpu都给吃光了。这个部署资源拉取了centos镜像，在镜像通过curl获取特定主机的配置文件，以及程序文件，并做了10倍冗余（replicas）。攻击者很鸡贼，并未将cpu资源消耗光，所以如果不实际查看集群状态，并不容易得知异常。跟踪到相应的站点查看信息，发现攻击者在用集群挖矿（坑爹）。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/07/k8s-invaded/#espandi" rel="contents">
+            <a class="btn" href="/2018/05/07/k8s-invaded/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1020,7 +1020,7 @@
           <p>lua的语法和常规的脚本很为接近，如果对某种脚本几位理解，写一点其它类型的脚本并没有什么特别需要注意的地方。程序语言无非就那些构成要素，变量定义，流程控制，循环控制，函数，类，模块，垃圾回收。常规的使用并不需要深入太多细节。在特定的编程背景－openresty下，lua本生并不会成为编写openresty的阻力。自己在实际实现设计需求的过程中，也只是过过一遍lua核心语法后，按照记忆去书写需要实现的功能，功能编写完成后，再运行检查细节，相对高效，感觉也很不错。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/03/using-openresty/#espandi" rel="contents">
+            <a class="btn" href="/2018/04/03/using-openresty/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1157,7 +1157,7 @@
 <li>缓存使用的redis，目前主要用于验证码，登录授权token等场景。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/19/startup-tech-framework/#espandi" rel="contents">
+            <a class="btn" href="/2018/01/19/startup-tech-framework/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1298,7 +1298,7 @@
 <li><p>case2 如果节点P为黑色，则添加完成，因为节点N为红色，整个树的高度保持不变；</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/22/rbtree-note/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/22/rbtree-note/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1436,7 +1436,7 @@
 <p>这些系统属性可通过以下java源码打印出:<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/06/java-class-find-resolve/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/06/java-class-find-resolve/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1576,7 +1576,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/05/java-volatile-resolve/#espandi" rel="contents">
+            <a class="btn" href="/2017/09/05/java-volatile-resolve/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1681,7 +1681,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

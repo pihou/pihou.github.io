@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="短链接这一套，现在已经玩的太过成熟了，应有的基础设施都有。长链接则相对没有一个大一统的方案。可能是应为短链接的场景更加具有普适性，而长链接则更具定制性吧！最近在落地长链接服务，最终协议层面选定了mqtt。轻量，简明配合mq来做，分布式架构都有了，对于多数中小型规模的公司而言，这样的方案，应该算是极为合适的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-28T06:44:31.000Z">
+<meta property="og:updated_time" content="2018-06-28T06:47:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mqtt浅评">
 <meta name="twitter:description" content="短链接这一套，现在已经玩的太过成熟了，应有的基础设施都有。长链接则相对没有一个大一统的方案。可能是应为短链接的场景更加具有普适性，而长链接则更具定制性吧！最近在落地长链接服务，最终协议层面选定了mqtt。轻量，简明配合mq来做，分布式架构都有了，对于多数中小型规模的公司而言，这样的方案，应该算是极为合适的">
@@ -369,7 +369,7 @@
 <li>mqtt的鉴权，客户端首先是通过http的接口做的账号注册以及登录操作，获取到的token是缓存在redis中的，所以把这个token带到了mqtt这边，查验下token的有效性，即验证了权限；</li>
 <li>消息队列预计使用的nsq（实时的消息队列），当然中间遇到了一些问题，暂时走的redis作为中转（当然会丢消息）；</li>
 <li>至于更多扩展，比如创建某个topic，订阅某个topic，自己实际是向把这种偏向于业务多一些的接口放到http层来处理的；</li>
-<li>当然，上面说的要看实际的业务场景，要是对即时性要求很高的应用，可能有得改变一些玩法了。</li>
+<li>当然，上面说的要看实际的业务场景，要是对即时性要求很高的应用，可能又得改变一些玩法了。</li>
 </ol>
 
       

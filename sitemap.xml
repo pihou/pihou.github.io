@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.shoupihou.site/2018/06/28/mqtt-remark/</loc>
+    
+    <lastmod>2018-06-28T06:44:31.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.shoupihou.site/2018/05/31/redis-cluster-1/</loc>
     
     <lastmod>2018-06-05T03:01:13.000Z</lastmod>

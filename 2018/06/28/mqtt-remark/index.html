@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="程序周边," />
+  <meta name="keywords" content="网络,架构," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
-<meta name="keywords" content="程序周边">
+<meta name="description" content="短链接这一套，现在已经玩的太过成熟了，应有的基础设施都有。长链接则相对没有一个大一统的方案。可能是应为短链接的场景更加具有普适性，而长链接则更具定制性吧！最近在落地长链接服务，最终协议层面选定了mqtt。轻量，简明配合mq来做，分布式架构都有了，对于多数中小型规模的公司而言，这样的方案，应该算是极为合适的">
+<meta name="keywords" content="网络,架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不懂装懂 MapReduce">
-<meta property="og:url" content="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/index.html">
+<meta property="og:title" content="mqtt浅评">
+<meta property="og:url" content="http://www.shoupihou.site/2018/06/28/mqtt-remark/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
+<meta property="og:description" content="短链接这一套，现在已经玩的太过成熟了，应有的基础设施都有。长链接则相对没有一个大一统的方案。可能是应为短链接的场景更加具有普适性，而长链接则更具定制性吧！最近在落地长链接服务，最终协议层面选定了mqtt。轻量，简明配合mq来做，分布式架构都有了，对于多数中小型规模的公司而言，这样的方案，应该算是极为合适的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T03:25:34.000Z">
+<meta property="og:updated_time" content="2018-06-28T06:44:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不懂装懂 MapReduce">
-<meta name="twitter:description" content="工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.">
+<meta name="twitter:title" content="mqtt浅评">
+<meta name="twitter:description" content="短链接这一套，现在已经玩的太过成熟了，应有的基础设施都有。长链接则相对没有一个大一统的方案。可能是应为短链接的场景更加具有普适性，而长链接则更具定制性吧！最近在落地长链接服务，最终协议层面选定了mqtt。轻量，简明配合mq来做，分布式架构都有了，对于多数中小型规模的公司而言，这样的方案，应该算是极为合适的">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/06/28/mqtt-remark/"/>
 
 
 
 
 
-  <title>不懂装懂 MapReduce | 皮猴的博客</title>
+  <title>mqtt浅评 | 皮猴的博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/06/28/mqtt-remark/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">不懂装懂 MapReduce</h1>
+          <h1 class="post-title" itemprop="name headline">mqtt浅评</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T00:00:00+08:00">
-                2017-05-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T00:00:00+08:00">
+                2018-06-28
               </time>
             
 
@@ -301,9 +301,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/12/something-about-mapreduce/#comments" itemprop="discussionUrl">
+                <a href="/2018/06/28/mqtt-remark/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/12/something-about-mapreduce/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/06/28/mqtt-remark/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -336,10 +336,41 @@
       
 
       
-        <p>工作中遇到一个需求, 原始数据只是记录好的仪表(比如水表,电表)在某一时刻的表盘数值,但是前端需要显示的是在每天,每周,每月的使用量. 我和同事说,这样的需求的话,我们就放到前端去算吧, 没想到同事说应该在后端算, python 的 MapReduce很快. 我听着感觉不太对劲,但是对MapReduce并不是很了解,也就没有说啥.</p>
+        <p>短链接这一套，现在已经玩的太过成熟了，应有的基础设施都有。长链接则相对没有一个大一统的方案。可能是应为短链接的场景更加具有普适性，而长链接则更具定制性吧！最近在落地长链接服务，最终协议层面选定了mqtt。轻量，简明配合mq来做，分布式架构都有了，对于多数中小型规模的公司而言，这样的方案，应该算是极为合适的</p>
 <a id="more"></a>
-<p>后续为此专门查阅了MapReduce,相关概念. 简单来说,MapReduce,是在做数据统计运算是的两个步骤, 一个是Map, 一个是Reduce, 和Python的内建函数相类似的, Map是在做数据统计前的加工处理, Reduce则是在计算最终需要的统计数据. 这些统计数据之前并无依赖性,可以放在分布式集群中,多机器并行计算. MapReduce,只是这种算法的思想核心而已. 快也仅仅只是因为算法的本身而已, 和实际程序执行效率并无关系. 重点是在与分布式,并发执行. </p>
-<p>但是,同事的说法就很让人无语了,我们可不可以不要这么肤浅. 玩概念还玩的这么逗比的. 我个人是极为讨厌半懂不懂还装模作样的.为此自己还专门翻看了python Map Reduce的实现, 也不是什么黑魔法,和使用脚本去写实现也没啥大区别,只是在c层简单封装了一层仅此而已. 更何况仅仅Map Reduce并不能为完全代表MapReduce的全部思想与实现,单单是两个核心实现函数而已.</p>
+<p>mqtt的QoS方案很有意思，让我想起了以前坐手游的那会儿，印象里大家都认为tcp是安全稳定的，不会丢包，确忽略了连接断开后，socket的新建。简单点说，用户态的socket调用，只要内核缓存还有空间，成功的将用户发送的数据放入缓存之后，调用就返回了，而并不是在收到对方的ack之后返回的（要是收到tcp ack，系统调用才返回的话，时延可想而知）。但是如此基本的问题，或许是大家都做多了业务层逻辑实现的缘故，压根没人意识到。或多或少会有点鄙视老东家只会码代码的那些码农吧！整了一堆的幺蛾子。</p>
+<p>基于上面阐述的场景，所有哪怕你用的是tcp，也并不能保证你发的信息对方一定收到了，亦或是仅成功的接受了一次。由此引入了Qos，服务质量，听起来很唬人，想起了tcp头部的Qos，但白话就三句</p>
+<ol>
+<li>QoS 0 消息仅发送一次</li>
+<li>QoS 1 消息保证交付一次或多次</li>
+<li>QoS 2 消息保证交付且仅一次</li>
+</ol>
+<p>QoS 0没什么好谈的，成功调用玩一次发送就收工了，QoS 1无非是停等，要一只等到对方回了ack（非tcp层ack），才移除对已经发送消息的缓存。QoS 2就有点神奇了，它是怎么保证仅交付一次的了？实际这里首先要明确一个问题，仅交付一次，并不是说接收方只接受到一次消息，而是接收方的mqtt协议层，仅向其调用着交付一次消息。想明白这一点，就豁然开朗了，无非是靠着mqtt双方的精诚合作，来达到的效果。</p>
+<p>下面简述下整个过程</p>
+<p>发送方</p>
+<ol>
+<li>发送方发送消息，记录消息对应的标示，等待 pubrec，接收着成功接收的回复</li>
+<li>在接收到pubrec前，若掉线则上线后再次发送消息publish</li>
+<li>接收到pubrec后发送pubrel，不再发送publish包，等待pubcomp包（publish complete接收方发送）</li>
+<li>在接收到pubcomp包前，若掉线则上线后再次发送pubrec</li>
+<li>成功接收到pubcomp后，释放消息对应的标示，可再次使用</li>
+<li>如果迟迟收不到pubcomp，则通常已经掉线，上线后再次重发pubrel即可</li>
+</ol>
+<p>接收方</p>
+<ol>
+<li>接收到publish包后，根据其对应的标示返回pubrec，此时即可向上层交付消息，在后续发送完成pubcomp前，均不可将同一标示的数据交付给上层接收着</li>
+<li>若断线，需重发pubrec，即需要将这些中间状态保存到session中</li>
+<li>在接收到pubrel 后，发送pubcomp包</li>
+<li>同2</li>
+</ol>
+<p>写这篇文章，多半是因为在看mqtt协议，浏览到QoS 2章节，突然的啊哈，原来是这样。外加做手游的那会儿，半知半解的疑问。所以还是记录下，自己的成长和收获吧</p>
+<p>架构简述</p>
+<ol>
+<li>mqtt的鉴权，客户端首先是通过http的接口做的账号注册以及登录操作，获取到的token是缓存在redis中的，所以把这个token带到了mqtt这边，查验下token的有效性，即验证了权限；</li>
+<li>消息队列预计使用的nsq（实时的消息队列），当然中间遇到了一些问题，暂时走的redis作为中转（当然会丢消息）；</li>
+<li>至于更多扩展，比如创建某个topic，订阅某个topic，自己实际是向把这种偏向于业务多一些的接口放到http层来处理的；</li>
+<li>当然，上面说的要看实际的业务场景，要是对即时性要求很高的应用，可能有得改变一些玩法了。</li>
+</ol>
 
       
     </div>
@@ -360,7 +391,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2017/05/12/something-about-mapreduce/" title="不懂装懂 MapReduce">http://www.shoupihou.site/2017/05/12/something-about-mapreduce/</a>
+    <a href="http://www.shoupihou.site/2018/06/28/mqtt-remark/" title="mqtt浅评">http://www.shoupihou.site/2018/06/28/mqtt-remark/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -375,7 +406,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/程序周边/" rel="tag"># 程序周边</a>
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -388,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/23/autotools-learn-note/" rel="next" title="autotools个人备忘">
-                <i class="fa fa-chevron-left"></i> autotools个人备忘
+              <a href="/2018/05/31/redis-cluster-1/" rel="next" title="redis集群（一）">
+                <i class="fa fa-chevron-left"></i> redis集群（一）
               </a>
             
           </div>
@@ -397,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/30/xss-example/" rel="prev" title="xss攻击案例分析">
-                xss攻击案例分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -701,9 +730,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2017/05/12/something-about-mapreduce/';
-          this.page.identifier = '2017/05/12/something-about-mapreduce/';
-          this.page.title = '不懂装懂 MapReduce';
+          this.page.url = 'http://www.shoupihou.site/2018/06/28/mqtt-remark/';
+          this.page.identifier = '2018/06/28/mqtt-remark/';
+          this.page.title = 'mqtt浅评';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://pihou.disqus.com/embed.js';

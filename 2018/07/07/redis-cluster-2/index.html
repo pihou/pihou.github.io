@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="网络," />
+  <meta name="keywords" content="redis,分布式," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="刚入职没到半年时，找公司运维申请了一个微服务的二级域名。但是域名迟迟没有生效，对于域名解析机制也不是很了解，询问运维，运维回复说dns域名信息需要同步，dns服务器很多的。对于运维的回复一直持怀疑态度，就算dns解析从根服务器，到顶级域名服务器，再到二级，网络通信的速度这么快，无论如何好几分钟的时间也说不过去。 为了解决心中的疑问，最近详细阅读了tcp／ip详解的dns部分，并在网上搜寻资料，希望">
-<meta name="keywords" content="网络">
+<meta name="description" content="redis官方集群一共是两种玩法。一种是主备，外加sentinel哨兵节点。哨兵节点用于在主节点发生故障时从节点的选举。这种搞法，一主多从，读写分离，主要用于将redis作为系统的主力数据库，数据与数据间关联度大的情形。另一种则是真正分布式的玩法，将所有key空间通过crc64 分为16384个槽，做水平分割，将不同的槽分配给不同的节点。节点又分为主节点，从节点。从节点异步复制主节点数据，并在主节">
+<meta name="keywords" content="redis,分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dns浅析">
-<meta property="og:url" content="http://www.shoupihou.site/2017/07/30/little-thinking-about-dns/index.html">
+<meta property="og:title" content="redis集群（二）">
+<meta property="og:url" content="http://www.shoupihou.site/2018/07/07/redis-cluster-2/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="刚入职没到半年时，找公司运维申请了一个微服务的二级域名。但是域名迟迟没有生效，对于域名解析机制也不是很了解，询问运维，运维回复说dns域名信息需要同步，dns服务器很多的。对于运维的回复一直持怀疑态度，就算dns解析从根服务器，到顶级域名服务器，再到二级，网络通信的速度这么快，无论如何好几分钟的时间也说不过去。 为了解决心中的疑问，最近详细阅读了tcp／ip详解的dns部分，并在网上搜寻资料，希望">
+<meta property="og:description" content="redis官方集群一共是两种玩法。一种是主备，外加sentinel哨兵节点。哨兵节点用于在主节点发生故障时从节点的选举。这种搞法，一主多从，读写分离，主要用于将redis作为系统的主力数据库，数据与数据间关联度大的情形。另一种则是真正分布式的玩法，将所有key空间通过crc64 分为16384个槽，做水平分割，将不同的槽分配给不同的节点。节点又分为主节点，从节点。从节点异步复制主节点数据，并在主节">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T03:23:34.000Z">
+<meta property="og:updated_time" content="2018-07-07T09:42:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dns浅析">
-<meta name="twitter:description" content="刚入职没到半年时，找公司运维申请了一个微服务的二级域名。但是域名迟迟没有生效，对于域名解析机制也不是很了解，询问运维，运维回复说dns域名信息需要同步，dns服务器很多的。对于运维的回复一直持怀疑态度，就算dns解析从根服务器，到顶级域名服务器，再到二级，网络通信的速度这么快，无论如何好几分钟的时间也说不过去。 为了解决心中的疑问，最近详细阅读了tcp／ip详解的dns部分，并在网上搜寻资料，希望">
+<meta name="twitter:title" content="redis集群（二）">
+<meta name="twitter:description" content="redis官方集群一共是两种玩法。一种是主备，外加sentinel哨兵节点。哨兵节点用于在主节点发生故障时从节点的选举。这种搞法，一主多从，读写分离，主要用于将redis作为系统的主力数据库，数据与数据间关联度大的情形。另一种则是真正分布式的玩法，将所有key空间通过crc64 分为16384个槽，做水平分割，将不同的槽分配给不同的节点。节点又分为主节点，从节点。从节点异步复制主节点数据，并在主节">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2017/07/30/little-thinking-about-dns/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/07/07/redis-cluster-2/"/>
 
 
 
 
 
-  <title>dns浅析 | 皮猴的博客</title>
+  <title>redis集群（二） | 皮猴的博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2017/07/30/little-thinking-about-dns/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/07/07/redis-cluster-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">dns浅析</h1>
+          <h1 class="post-title" itemprop="name headline">redis集群（二）</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T00:00:00+08:00">
-                2017-07-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-07T00:00:00+08:00">
+                2018-07-07
               </time>
             
 
@@ -301,9 +301,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/07/30/little-thinking-about-dns/#comments" itemprop="discussionUrl">
+                <a href="/2018/07/07/redis-cluster-2/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/07/30/little-thinking-about-dns/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/07/07/redis-cluster-2/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -336,21 +336,17 @@
       
 
       
-        <p>刚入职没到半年时，找公司运维申请了一个微服务的二级域名。但是域名迟迟没有生效，对于域名解析机制也不是很了解，询问运维，运维回复说dns域名信息需要同步，dns服务器很多的。对于运维的回复一直持怀疑态度，就算dns解析从根服务器，到顶级域名服务器，再到二级，网络通信的速度这么快，无论如何好几分钟的时间也说不过去。</p>
-<p>为了解决心中的疑问，最近详细阅读了tcp／ip详解的dns部分，并在网上搜寻资料，希望能够得到解答。事实证明，运维太挫了，鄙视下。</p>
+        <p>redis官方集群一共是两种玩法。一种是主备，外加sentinel哨兵节点。哨兵节点用于在主节点发生故障时从节点的选举。这种搞法，一主多从，读写分离，主要用于将redis作为系统的主力数据库，数据与数据间关联度大的情形。另一种则是真正分布式的玩法，将所有key空间通过crc64 分为16384个槽，做水平分割，将不同的槽分配给不同的节点。节点又分为主节点，从节点。从节点异步复制主节点数据，并在主节点发生故障时，向其它主节点申请选票，进行选举，替代主节点。</p>
 <a id="more"></a>
-<p>dns 解析的典型流程，大致可以分为以下几个步骤：</p>
+<p>两种玩法的选举，实际是实用的raft算法。后文将重点介绍下第二种做法的一些技术细节。ps: 之前被选举的config-epoch current-epoch给整懵逼了，redis的官方文档，我个人认为在阐述这两个epoch的时候，并不是很清晰。网上搜索了一下，也没有找到比较好的文章介绍这两个字段的。可能是一般都不会纠结于这种细节吧，能想到的办法最后只剩下阅读源码了，但是不想把问题铺的这么开。最后想想，实际自己在第一阶段的核心目标也只是搞清楚大致的原理，并实践之就行了。转述成行动步骤，也就是 搭建redis集群，测试master节点的宕掉后的failover，集群添加节点，集群删除节点，集群reshard即可。</p>
+<p>刚入手时，使用的redis原生的cluster系列命令，琐碎了些，也遇到一些问题。比如本来以为对单节点的delslots操作，会同步到其它节点的，但是事实并非如此，比预计的弱一些，并不会。甚至和官方文档里面阅读到的细节并不太一样，一直以为会通过集群间的gossip同步上的。好吧，再次退而求其次，使用了也算是官方的redis-trib.rb，整个流程要相对舒畅了很多，当然细节也可以丢一丢了。换一下角度想了想，实际想学习redis集群管理的一些细节实际可以通过redis-trib.rb来做为突破口的。蛋疼的是redis-trib.rb是ruby写的，还是不想把战线扩的太大。线索先留在这里，后续跟进。</p>
+<p>redis-trib的操作使用并没有什么太值得在这里叙述的，网络上的教程也有大把的。想了想如何把redis集群部署到k8s, 可能并不算太适合完全自动的扩容缩容，还是需要手工通过redis-trib来操作，不过为了简化操作，可以通过程序把所有的redis节点信息自动生成到某个配置文件里面，方便redis-trib的操作维护。</p>
+<p>最后提提集群的部分技术细节</p>
 <ol>
-<li>程序使用封装好的api，解析域名</li>
-<li>api内将和本地主机设置的dns服务器进行通信，查询域名对应的ips信息</li>
-<li>dns服务器，将依次询问根服务器，顶级域名dns服务器地址</li>
-<li>拿到顶级域名dns服务器信息后再和其通信，获取二级域名ns 服务器数据</li>
-<li>由此迭代，直至获取dns A纪录数据。</li>
+<li>集群的拓扑结构。集群节点间的通信通过比对客户端通信的端口大10000的端口通信，每个节点均主动于其它节点新建一个socket。redis称之为cluster bus</li>
+<li>redis集群的设计目标是性能优先，主从之间的数据同步是异步写入的，所以存在丢失数据的可能性</li>
+<li>如果希望某段key分配到同一slots，可以通过hash tag来实现，即对这些key的某部分共有字段做特殊标示，使用大括号括起来</li>
 </ol>
-<p>在程序和dns服务器的调用过程中，可以视为一个递归查询过程，而dns服务器依次查询各个根，顶级域名服务器的过程时一个迭代查询的过程。</p>
-<p>如果对一个现有域名做出ip修改，修改的生效时间，最大为域名的ttl，因为在域名服务器获取到对应的域名信息后，仅在ttl过期后，才会再次依次查询根服务器及一下各级域名服务器。在此之前仅会返回之前缓存的数据。</p>
-<p>如果是添加一个新的域名，如果在域名添加前，便对同一dns服务器进行过解析请求，这是域名并不存在，dns服务器，将作出逆向缓存，标记这个域名并不存在，仅在缓存过期后才会再次实际作出解析操作。</p>
-<p>当然如果是不同的dns服务器，生效的具体进度当然也是随机的，由上述机制可以推导出。</p>
 
       
     </div>
@@ -371,7 +367,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2017/07/30/little-thinking-about-dns/" title="dns浅析">http://www.shoupihou.site/2017/07/30/little-thinking-about-dns/</a>
+    <a href="http://www.shoupihou.site/2018/07/07/redis-cluster-2/" title="redis集群（二）">http://www.shoupihou.site/2018/07/07/redis-cluster-2/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -386,7 +382,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网络/" rel="tag"># 网络</a>
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
           
         </div>
       
@@ -399,8 +397,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/16/python-multithread-resolve/" rel="next" title="python多线程浅析">
-                <i class="fa fa-chevron-left"></i> python多线程浅析
+              <a href="/2018/06/28/mqtt-remark/" rel="next" title="mqtt浅评">
+                <i class="fa fa-chevron-left"></i> mqtt浅评
               </a>
             
           </div>
@@ -409,8 +407,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/05/java-volatile-resolve/" rel="prev" title="java volatile浅析">
-                java volatile浅析 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/07/Untitled/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -712,9 +710,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2017/07/30/little-thinking-about-dns/';
-          this.page.identifier = '2017/07/30/little-thinking-about-dns/';
-          this.page.title = 'dns浅析';
+          this.page.url = 'http://www.shoupihou.site/2018/07/07/redis-cluster-2/';
+          this.page.identifier = '2018/07/07/redis-cluster-2/';
+          this.page.title = 'redis集群（二）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://pihou.disqus.com/embed.js';

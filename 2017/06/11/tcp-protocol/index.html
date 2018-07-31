@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="一. 状态机器切换主动（连接，断开） socket() 创建套接字（CLOSED state） connect 连接服务器,发送sync tcp数据包进入 SYN_SEND state 接收到服务器返回的sync ack 进入 ESTABLISHED state，connect调用返回 close 关闭套接字 发送 FIN tcp数据包，进入FIN_WAIT1 state 接收到服务端fin ac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T03:25:57.000Z">
+<meta property="og:updated_time" content="2018-07-31T09:30:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tcp协议概览">
 <meta name="twitter:description" content="一. 状态机器切换主动（连接，断开） socket() 创建套接字（CLOSED state） connect 连接服务器,发送sync tcp数据包进入 SYN_SEND state 接收到服务器返回的sync ack 进入 ESTABLISHED state，connect调用返回 close 关闭套接字 发送 FIN tcp数据包，进入FIN_WAIT1 state 接收到服务端fin ac">
@@ -369,7 +369,7 @@
 <li>spurious timeouts，并入网络条件发生了剧烈的波动，rto的估算出现了很大偏差。数据包的实际接收顺序发生了波动，或者同一数据，接收方接收到了多份（中间路由器的缘故）</li>
 </ol>
 <h3 id="四-流控"><a href="#四-流控" class="headerlink" title="四. 流控"></a>四. 流控</h3><ol>
-<li><p>延迟ack，数据接收方在接收到数据后，并不马上返回ack，而是等待已定时间，和自己需要主动发送的数据一起返回，如等待时间超时，则仅单独返回ack。用以减轻网络负荷</p>
+<li><p>延迟ack，数据接收方在接收到数据后，并不马上返回ack，而是等待一定时间，和自己需要主动发送的数据一起返回，如等待时间超时，则仅单独返回ack。或在接受到若干次数据包后，一并返回累计的ack，用以减轻网络负荷。</p>
 </li>
 <li><p>nagle算法，数据发送方在接收到用户放入的数据后，并不一定马上发送数据，而是在待发送的数据大于mss后才发送，或者在接收到用户数据时发送缓冲区没有任何需要ack的数据，也会立马进行发送。此算法可解决糊涂窗口综合症</p>
 </li>

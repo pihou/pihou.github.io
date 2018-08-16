@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-16T09:50:33.000Z">
+<meta property="og:updated_time" content="2018-08-16T09:54:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rps测试">
 <meta name="twitter:description" content="本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，">
@@ -337,7 +337,7 @@
 
       
         <p>本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，一时之间还不知道从哪儿入手。阴差阳错的，寻找到了一个locust的扩展库 boomer, 使用go编写，通过zeromq，和locust主节点通信。整好自己想练练手，熟络下go，由此选定了最后的测试工具locust + boomer。至于最早为什么会选定locust，好像不知道在哪儿看到的推荐了。locust本身够轻量，上手快也是一个关键。</p>
-<p>&lt;–! more –&gt;</p>
+<a id="more"></a>
 <p>哦，想起来了，为什么会找boomer，起因是我刚在本地做测试时，直接使用locust，locust总会爆出域名无法解析的问题。奇怪之余，想想还是整个好排查的方案，就找到了boomer。用gorouting写的网络程序，够轻量，够简洁，对go的好感度实在不错。换上了boomer之后，还是会遇到域名解析的问题，与之同时的还会爆出开启了太多文件的错误。域名无法解析的问题，没有思路，就先行解决打开文件过多的问题。这个设置本身倒是没什么太多好说的，唯一需要注意的是，设置好系统级别的限制之后，还需要对shell做下设置（mac os 10.11），命令如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">读取</span><br><span class="line">sysctl kern.maxfiles</span><br><span class="line">sysctl kern.maxfilesperproc</span><br><span class="line">系统临时设置</span><br><span class="line">sysctl -w kern.maxfiles=20480 </span><br><span class="line">sysctl -w kern.maxfilesperproc=18000</span><br><span class="line">系统用久设置，将上面的命令写入/etc/sysctl.conf</span><br><span class="line">shell设置</span><br><span class="line">ulimit -S -n 2048</span><br></pre></td></tr></table></figure>
 <p>在解决了开启文件过多的问题之后，又依次碰到并解决了下面的问题</p>

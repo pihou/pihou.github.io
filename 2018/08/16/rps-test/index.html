@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="杂谈," />
+  <meta name="keywords" content="k8s,网络," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="当自己还是一个小屁孩的时候,时常被大人们问起,自己的梦想是什么,当时认为科学家很了不起,回答说以后想做科学家.初中的时候,再次被家人问起以后想要做什么,再也记不清当时的缘由,回答说想要做一个建筑师,或许是当时受了某部电视剧或某本书的影响吧.小时候总认为运动员要不是第一名就没有任何的意义.长大后渐渐意识到这种想法的荒谬.">
-<meta name="keywords" content="杂谈">
+<meta name="description" content="本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，">
+<meta name="keywords" content="k8s,网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="杂谈">
-<meta property="og:url" content="http://www.shoupihou.site/2016/10/06/some-talk/index.html">
+<meta property="og:title" content="rps测试">
+<meta property="og:url" content="http://www.shoupihou.site/2018/08/16/rps-test/index.html">
 <meta property="og:site_name" content="皮猴的博客">
-<meta property="og:description" content="当自己还是一个小屁孩的时候,时常被大人们问起,自己的梦想是什么,当时认为科学家很了不起,回答说以后想做科学家.初中的时候,再次被家人问起以后想要做什么,再也记不清当时的缘由,回答说想要做一个建筑师,或许是当时受了某部电视剧或某本书的影响吧.小时候总认为运动员要不是第一名就没有任何的意义.长大后渐渐意识到这种想法的荒谬.">
+<meta property="og:description" content="本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T03:25:17.000Z">
+<meta property="og:updated_time" content="2018-08-16T09:50:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="杂谈">
-<meta name="twitter:description" content="当自己还是一个小屁孩的时候,时常被大人们问起,自己的梦想是什么,当时认为科学家很了不起,回答说以后想做科学家.初中的时候,再次被家人问起以后想要做什么,再也记不清当时的缘由,回答说想要做一个建筑师,或许是当时受了某部电视剧或某本书的影响吧.小时候总认为运动员要不是第一名就没有任何的意义.长大后渐渐意识到这种想法的荒谬.">
+<meta name="twitter:title" content="rps测试">
+<meta name="twitter:description" content="本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.shoupihou.site/2016/10/06/some-talk/"/>
+  <link rel="canonical" href="http://www.shoupihou.site/2018/08/16/rps-test/"/>
 
 
 
 
 
-  <title>杂谈 | 皮猴的博客</title>
+  <title>rps测试 | 皮猴的博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2016/10/06/some-talk/">
+    <link itemprop="mainEntityOfPage" href="http://www.shoupihou.site/2018/08/16/rps-test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="瘦皮猴">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">杂谈</h1>
+          <h1 class="post-title" itemprop="name headline">rps测试</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-06T00:00:00+08:00">
-                2016-10-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T00:00:00+08:00">
+                2018-08-16
               </time>
             
 
@@ -301,9 +301,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/10/06/some-talk/#comments" itemprop="discussionUrl">
+                <a href="/2018/08/16/rps-test/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/10/06/some-talk/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/08/16/rps-test/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -336,12 +336,35 @@
       
 
       
-        <p>当自己还是一个小屁孩的时候,时常被大人们问起,自己的梦想是什么,当时认为科学家很了不起,回答说以后想做科学家.初中的时候,再次被家人问起以后想要做什么,再也记不清当时的缘由,回答说想要做一个建筑师,或许是当时受了某部电视剧或某本书的影响吧.小时候总认为运动员要不是第一名就没有任何的意义.长大后渐渐意识到这种想法的荒谬.</p>
-<a id="more"></a>
-<p>不知道何种心理机制,自尊心?自我中心?使的自己总想要最好的,最完美的(或许大家都会有相接近的心里体验).总是在外围驻足观看,小心翼翼的,不轻易打破界限,亦不轻易前行.我所想的科学家,建筑师,运动员也不是现实中的他们.只不过是这种或是那种信息传播中给我的刻板印象罢了.他们或许分别代表着甲乙丙心目中和实践中向往的事业,却不是我的.若不去尝试,也很难找到心中所希冀的.</p>
-<p>I have a big plan.但是却没有实现这个伟大计划的行程表和细节表.当自己面对一个立体的计划时,脑袋里面浮现的全是零碎的细节.无序凌乱的东西总是很容易将人的吓唬住. Done is better than perfect,还是从一点一滴做起,将模糊的东西明确,将点连成面,将面织成体.</p>
-<p>这个不好,那个不行.这里应该这样,那里不是那么做的.为什么要用这些条条框框束缚住自己,而不多去尝试,迭代,前行,感悟,收获了?</p>
-<p>在游览web页面时mac的鼠标滚轮向下滑动页面是向上翻动的,模拟了手指在触摸屏上的操作.而在linux或windows下,页面却是向下滚动的,代表了页面右侧的滚轴的移动方向.有很多人不习惯使用mac,多是出于此类原因.一旦习惯了某类事物,对与之相反的东西边持有了偏见,便也给自己立下的思维的牢笼.适应环境的能力也就停滞不前了.有段时间,每天都会更换一下terminal的字体,希望能拓展自己的适应力,突破自己的舒适区.</p>
+        <p>本来想把这篇日志命名为网络优化的，但是实际做下来，还是主要在做测试方案了，实际的优化方案基本没有。日常的开发工作，通常不会触碰到很多边边角角的东西，但是在极限测试的情况下，一不留神就是一个边界了。测试选用的测试工具是由pyton开发的locust。由于locust网络库选用的gevent，而自己对这一套黑魔法并不感冒，monkey patch啥的，实在是掩盖了太多细节，万一出个莫名其妙的问题的话，一时之间还不知道从哪儿入手。阴差阳错的，寻找到了一个locust的扩展库 boomer, 使用go编写，通过zeromq，和locust主节点通信。整好自己想练练手，熟络下go，由此选定了最后的测试工具locust + boomer。至于最早为什么会选定locust，好像不知道在哪儿看到的推荐了。locust本身够轻量，上手快也是一个关键。</p>
+<p>&lt;–! more –&gt;</p>
+<p>哦，想起来了，为什么会找boomer，起因是我刚在本地做测试时，直接使用locust，locust总会爆出域名无法解析的问题。奇怪之余，想想还是整个好排查的方案，就找到了boomer。用gorouting写的网络程序，够轻量，够简洁，对go的好感度实在不错。换上了boomer之后，还是会遇到域名解析的问题，与之同时的还会爆出开启了太多文件的错误。域名无法解析的问题，没有思路，就先行解决打开文件过多的问题。这个设置本身倒是没什么太多好说的，唯一需要注意的是，设置好系统级别的限制之后，还需要对shell做下设置（mac os 10.11），命令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">读取</span><br><span class="line">sysctl kern.maxfiles</span><br><span class="line">sysctl kern.maxfilesperproc</span><br><span class="line">系统临时设置</span><br><span class="line">sysctl -w kern.maxfiles=20480 </span><br><span class="line">sysctl -w kern.maxfilesperproc=18000</span><br><span class="line">系统用久设置，将上面的命令写入/etc/sysctl.conf</span><br><span class="line">shell设置</span><br><span class="line">ulimit -S -n 2048</span><br></pre></td></tr></table></figure>
+<p>在解决了开启文件过多的问题之后，又依次碰到并解决了下面的问题</p>
+<ol>
+<li><p>域名无法解析的问题，估计是无法创建查询域名用的socket导致的，再调整了能开启的最大文件数量后消失了</p>
+</li>
+<li><p>提示无法创建到目的主机的socket，研究了一下，是本地创建的socket过多导致的，go的http官方包，无法限制对同一主机创建的socket的数量，疯狂的新建的socket(当然，我疯狂的调用才是主因)。改用第三方的fasthttp，也没找到好的限制办法，还是会莫名其妙的创建很多连接，尽管官方声明会限制单一主机最大连接数。而这两个库的官方文档也谈不上很友好，最后痛定思痛，自己写了一个简单的http客户端，通过channel来做连接池，自己编写代码，解析http数据包。这里再简单说明下，为何单机对同一服务ip连接过多会造成本地无法新建socket，首先，目标地址和端口是确定的，本地的ip也是确定的，然后端口的总数量也只有65535个，而且通常会限制到一个区间范围（可调整 net.ipv4.ip_local_port_range），所以自然是很受限制。所以如果需要测试服务的总承载连接数，会需要比较多的服务器来发器连接</p>
+</li>
+<li><p>连接被拒绝，connection refused，使用wireshark抓包，发现icmp 70号数据包(Destination unreachable, communication administratively filtered)，推测是服务商为了防止ddos攻击，限制了单一源ip对目的ip的多个连接。将连接数量调整到100的数量级也无济于事，只好将测试的客户端放置到阿里云vpc的内部</p>
+</li>
+<li><p>为了简便，自己写的http响应报文解析代码，不支持transfer-encoding，所以一旦遇到异常，解析就会出问题，连接卡住，停滞，零零碎碎的耽误了些时间</p>
+</li>
+</ol>
+<p>服务端的配置简单说明如下</p>
+<ol>
+<li>8核16G 6台服务器 centos 7.4</li>
+<li>kubernetes 1.11集群</li>
+<li>网络方案使用的flanneld的vxlan</li>
+<li>k8s的服务通过ingress（daemonset）来提供，ingress做hostport暴露端口</li>
+<li>使用阿里云的负载均衡，各个节点的ingress作为其后端服务</li>
+</ol>
+<p><strong>最终测试的rps为 15k左右</strong>。php的鸟哥<a href="https://www.weibo.com/laruence?from=myfollow_all&amp;is_all=1&amp;is_search=1&amp;key_word=qps#1534391402394" target="_blank" rel="noopener">曾提到过</a>，微博在春节的时候，qps也就差不多几万的样子，所以qps并没那么浮夸，很中肯。</p>
+<p>最后再对可能的网络优化做下简述</p>
+<ol>
+<li>网络优化还是要结合具体的业务场景，比如 nginx的配置keepalive_timeout keepalive_requests，如果我把keepalive_requests调高一些，我的压测数据可能更好，但是对于实际场景确没有太多意义</li>
+<li>其它能想到的可以做优化的地方，openresty和uwsgi之间，改用unix socket。k8s的网络方案改用flanneld host-gw</li>
+</ol>
 
       
     </div>
@@ -362,7 +385,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.shoupihou.site/2016/10/06/some-talk/" title="杂谈">http://www.shoupihou.site/2016/10/06/some-talk/</a>
+    <a href="http://www.shoupihou.site/2018/08/16/rps-test/" title="rps测试">http://www.shoupihou.site/2018/08/16/rps-test/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -377,7 +400,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/杂谈/" rel="tag"># 杂谈</a>
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
           
         </div>
       
@@ -390,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/20/go-grammar-handbook/" rel="next" title="go语法速查手册">
-                <i class="fa fa-chevron-left"></i> go语法速查手册
+              <a href="/2018/08/06/k8s-masquerade/" rel="next" title="k8s网络nat浅谈">
+                <i class="fa fa-chevron-left"></i> k8s网络nat浅谈
               </a>
             
           </div>
@@ -399,10 +424,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/15/some-feelings-abount-oo/" rel="prev" title="面向对象观感">
-                面向对象观感 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -703,9 +724,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://www.shoupihou.site/2016/10/06/some-talk/';
-          this.page.identifier = '2016/10/06/some-talk/';
-          this.page.title = '杂谈';
+          this.page.url = 'http://www.shoupihou.site/2018/08/16/rps-test/';
+          this.page.identifier = '2018/08/16/rps-test/';
+          this.page.title = 'rps测试';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://pihou.disqus.com/embed.js';

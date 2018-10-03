@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="redis,分布式," />
+  <meta name="keywords" content="分布式,redis," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="redis官方集群一共是两种玩法。一种是主备，外加sentinel哨兵节点。哨兵节点用于在主节点发生故障时从节点的选举。这种搞法，一主多从，读写分离，主要用于将redis作为系统的主力数据库，数据与数据间关联度大的情形。另一种则是真正分布式的玩法，将所有key空间通过crc64 分为16384个槽，做水平分割，将不同的槽分配给不同的节点。节点又分为主节点，从节点。从节点异步复制主节点数据，并在主节">
-<meta name="keywords" content="redis,分布式">
+<meta name="keywords" content="分布式,redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis集群（二）">
 <meta property="og:url" content="https://www.shoupihou.site/2018/07/07/redis-cluster-2/index.html">
@@ -382,9 +382,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/redis/" rel="tag"># redis</a>
-          
             <a href="/tags/分布式/" rel="tag"># 分布式</a>
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
           
         </div>
       
@@ -491,7 +491,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -504,7 +504,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="皮猴的博客">
 <meta property="og:description" content="接触go以后，一直很好奇goroutine是如何实现的（实际在go以前也会好奇python的协程实现）.每每搜索golang internal之类的文章都没有发现什么有价值的东东(严格来说也不准确，比如找到了这个)。网络上关于gorouine的文章基本上都在大谈特谈go的GPM模型。但是GPM是什么鬼？它距离我们的程序式的理解goroutine还差了一万里。 好吧，我承认，当意识到gorotine">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-04T14:20:44.519Z">
+<meta property="og:updated_time" content="2019-12-04T14:36:57.743Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="goroutine核心实现">
 <meta name="twitter:description" content="接触go以后，一直很好奇goroutine是如何实现的（实际在go以前也会好奇python的协程实现）.每每搜索golang internal之类的文章都没有发现什么有价值的东东(严格来说也不准确，比如找到了这个)。网络上关于gorouine的文章基本上都在大谈特谈go的GPM模型。但是GPM是什么鬼？它距离我们的程序式的理解goroutine还差了一万里。 好吧，我承认，当意识到gorotine">
@@ -334,6 +334,7 @@
         <p>接触go以后，一直很好奇goroutine是如何实现的（实际在go以前也会好奇python的协程实现）.每每搜索golang internal之类的文章都没有发现什么有价值的东东(严格来说也不准确，比如找到了<a href="https://github.com/teh-cmc/go-internals" target="_blank" rel="noopener">这个</a>)。网络上关于gorouine的文章基本上都在大谈特谈go的GPM模型。但是GPM是什么鬼？它距离我们的程序式的理解goroutine还差了一万里。</p>
 <p>好吧，我承认，当意识到gorotine的实现基石后，立马就不会感觉半点神奇了，但是在这之前，还是会觉得这玩意贼高大上的。</p>
 <p>面对goroutine你会产生一些什么疑问了？</p>
+<a id="more"></a>
 <ol>
 <li>goroutine之间的切换是怎么发生的？</li>
 <li>goroutine是如何保证在二进制原生程序的基础上，来维护多个调用栈的？（我看过python的虚拟机实现，所以很容易将他们的实现套到goroutine来思考go的实现，反而更加困顿）</li>
